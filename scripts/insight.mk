@@ -1,0 +1,52 @@
+insight_name = insight-$(insight_ver)a
+insight_file = $(insight_name).tar.$(insight_tarball_type)
+insight_url  = $(download_protocol)://sourceware.org/pub/insight/releases/$(insight_file)
+
+$(insight_file):
+	@echo "+++ Downloading Insight..."
+ifndef USE_CURL
+	wget -c $(insight_url)
+else
+	curl -O -J $(insight_url)
+endif
+
+unpack_insight: $(insight_file) unpack_insight_stamp
+
+unpack_insight_stamp:
+	@echo "+++ Unpacking Insight..."
+	rm -f $@
+	rm -rf $(insight_name)
+	tar xf $(insight_file)
+	touch $@
+
+build_insight: log = $(logdir)/$(insight_name).log
+build_insight: logdir
+build_insight: unpack_insight build_insight_stamp
+
+build_insight_stamp:
+	@echo "+++ Building Insight..."
+	rm -f $@
+	> $(log)
+	rm -rf build-$(insight_name)
+	mkdir build-$(insight_name)
+	cd build-$(insight_name); \
+      ../$(insight_name)/configure \
+        --disable-werror \
+        --prefix=$(sh_prefix) \
+        --target=$(sh_target) \
+        $(static_flag) \
+        $(to_log)
+	$(MAKE) $(makejobs) -C build-$(insight_name) $(to_log)
+	touch $@
+
+install_insight: log = $(logdir)/$(insight_name).log
+install_insight: logdir
+install_insight: build_insight install_insight_stamp
+
+install_insight_stamp:
+	@echo "+++ Installing Insight..."
+	rm -f $@
+	$(MAKE) -C build-$(insight_name) $(install_mode) DESTDIR=$(DESTDIR) $(to_log)
+	touch $@
+
+insight: install_insight

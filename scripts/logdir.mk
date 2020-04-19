@@ -1,0 +1,2 @@
+logdir:
+	@mkdir -p $(logdir)

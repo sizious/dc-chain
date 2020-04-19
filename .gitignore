@@ -1,0 +1,10 @@
+logs
+*.tar.*
+binutils-*
+gcc-*
+newlib-*
+gdb-*
+insight-*
+build-*
+*.stamp
+config.guess
