@@ -33,7 +33,7 @@ function unpack_dependency()
   local path=$(tolower "$dep_name")
 
   if [ -n "$dep_ver" ]; then
-    echo "Unpacking $dep_name $dep_ver..."
+    echo "  Unpacking $dep_name $dep_ver..."
     tar xf $path-$dep_ver.tar.$dep_type || exit 1
     mv $path-$dep_ver gcc-$gcc_ver/$path
   fi
@@ -65,7 +65,7 @@ function unpack_dependencies()
     isl_tarball_type=$ARM_ISL_TARBALL_TYPE
   fi
   
-  echo "Downloading prerequisites for GCC ${gcc_ver}..."
+  echo "Unpacking prerequisites for GCC ${gcc_ver}..."
 
   if [ "$USE_CUSTOM_DEPENDENCIES" == "1" ]; then
     unpack_dependency "$gcc_ver" "GMP"  "$gmp_ver"  "$gmp_tarball_type"
