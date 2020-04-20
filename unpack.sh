@@ -3,37 +3,6 @@
 # Getting configuration from Makefile
 source ./scripts/common.sh
 
-while [ "$1" != "" ]; do
-    PARAM=`echo $1 | awk -F= '{print $1}'`
-    case $PARAM in
-        --no-gmp)
-            unset SH_GMP_VER
-            unset ARM_GMP_VER
-            ;;
-        --no-mpfr)
-            unset SH_MPFR_VER
-            unset ARM_MPFR_VER
-            ;;
-        --no-mpc)
-            unset SH_MPC_VER
-            unset ARM_MPC_VER
-            ;;
-        --no-deps)
-            unset SH_GMP_VER
-            unset ARM_GMP_VER
-            unset SH_MPFR_VER
-            unset ARM_MPFR_VER
-            unset SH_MPC_VER
-            unset ARM_MPC_VER
-            ;;
-        *)
-            echo "error: unknown parameter \"$PARAM\""
-            exit 1
-            ;;
-    esac
-    shift
-done
-
 function unpack()
 {
   local name="$1"
@@ -78,24 +47,31 @@ function unpack_dependencies()
   local gmp_ver=$SH_GMP_VER
   local mpfr_ver=$SH_MPFR_VER
   local mpc_ver=$SH_MPC_VER
+  local isl_ver=$SH_ISL_VER
   local gmp_tarball_type=$SH_GMP_TARBALL_TYPE
   local mpfr_tarball_type=$SH_MPFR_TARBALL_TYPE
   local mpc_tarball_type=$SH_MPC_TARBALL_TYPE
+  local isl_tarball_type=$SH_ISL_TARBALL_TYPE
 
   if [ "$arch" == "arm" ]; then
     gcc_ver=$ARM_GCC_VER
     gmp_ver=$ARM_GMP_VER
     mpfr_ver=$ARM_MPFR_VER
     mpc_ver=$ARM_MPC_VER
+    isl_ver=$ARM_ISL_VER
     gmp_tarball_type=$ARM_GMP_TARBALL_TYPE
     mpfr_tarball_type=$ARM_MPFR_TARBALL_TYPE
     mpc_tarball_type=$ARM_MPC_TARBALL_TYPE
+    isl_tarball_type=$ARM_ISL_TARBALL_TYPE
   fi
   
+  echo "Downloading prerequisites for GCC ${gcc_ver}..."
+
   if [ "$USE_CUSTOM_DEPENDENCIES" == "1" ]; then
     unpack_dependency "$gcc_ver" "GMP"  "$gmp_ver"  "$gmp_tarball_type"
     unpack_dependency "$gcc_ver" "MPFR" "$mpfr_ver" "$mpfr_tarball_type"
     unpack_dependency "$gcc_ver" "MPC"  "$mpc_ver"  "$mpc_tarball_type"
+    unpack_dependency "$gcc_ver" "ISL"  "$isl_ver"  "$isl_tarball_type"
   else
     cd ./gcc-$gcc_ver && ./contrib/download_prerequisites && cd ..
   fi

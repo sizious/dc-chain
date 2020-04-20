@@ -12,26 +12,6 @@ while [ "$1" != "" ]; do
         --keep-downloads)
             KEEP_DOWNLOADS=1
             ;;
-        --no-gmp)
-            unset SH_GMP_VER
-            unset ARM_GMP_VER
-            ;;
-        --no-mpfr)
-            unset SH_MPFR_VER
-            unset ARM_MPFR_VER
-            ;;
-        --no-mpc)
-            unset SH_MPC_VER
-            unset ARM_MPC_VER
-            ;;
-        --no-deps)
-            unset SH_GMP_VER
-            unset ARM_GMP_VER
-            unset SH_MPFR_VER
-            unset ARM_MPFR_VER
-            unset SH_MPC_VER
-            unset ARM_MPC_VER
-            ;;
         *)
             echo "error: unknown parameter \"$PARAM\""
             exit 1
@@ -40,8 +20,59 @@ while [ "$1" != "" ]; do
     shift
 done
 
-if [ -z $KEEP_DOWNLOADS ]; then
+function cleanup_dependency()
+{
+  local type="$1"
+  local dep_name="$2"  
+  local dep_ver="$3"
+  local dep_type="$4"
 
+  local dep="${dep_name}-${dep_ver}"
+
+  if [ -n "$dep_ver" ]; then
+    if [ "$type" == "package" ]; then
+      rm -f "${dep}.tar.${dep_type}"
+	else
+	  rm -rf "${dep}"
+    fi
+  fi
+}
+
+function cleanup_dependencies()
+{
+  local arch=$1
+  local type=$2
+
+  local gmp_ver=$SH_GMP_VER
+  local mpfr_ver=$SH_MPFR_VER
+  local mpc_ver=$SH_MPC_VER
+  local isl_ver=$SH_ISL_VER
+  local gmp_tarball_type=$SH_GMP_TARBALL_TYPE
+  local mpfr_tarball_type=$SH_MPFR_TARBALL_TYPE
+  local mpc_tarball_type=$SH_MPC_TARBALL_TYPE
+  local isl_tarball_type=$SH_ISL_TARBALL_TYPE
+
+  if [ "$arch" == "arm" ]; then
+    gcc_ver=$ARM_GCC_VER
+    gmp_ver=$ARM_GMP_VER
+    mpfr_ver=$ARM_MPFR_VER
+    mpc_ver=$ARM_MPC_VER
+    isl_ver=$ARM_ISL_VER
+    gmp_tarball_type=$ARM_GMP_TARBALL_TYPE
+    mpfr_tarball_type=$ARM_MPFR_TARBALL_TYPE
+    mpc_tarball_type=$ARM_MPC_TARBALL_TYPE
+    isl_tarball_type=$ARM_ISL_TARBALL_TYPE
+  fi
+
+  if [ "$USE_CUSTOM_DEPENDENCIES" == "1" ]; then
+    cleanup_dependency "$type" "GMP"  "$gmp_ver"  "$gmp_tarball_type"
+    cleanup_dependency "$type" "MPFR" "$mpfr_ver" "$mpfr_tarball_type"
+    cleanup_dependency "$type" "MPC"  "$mpc_ver"  "$mpc_tarball_type"
+    cleanup_dependency "$type" "ISL"  "$isl_ver"  "$isl_tarball_type"
+  fi
+}
+
+if [ -z $KEEP_DOWNLOADS ]; then
   # Clean up downloaded tarballs...
   echo "Deleting downloaded packages..."
 
@@ -52,31 +83,8 @@ if [ -z $KEEP_DOWNLOADS ]; then
         newlib-$NEWLIB_VER.tar.$NEWLIB_TARBALL_TYPE
 
   if [ "$USE_CUSTOM_DEPENDENCIES" == "1" ]; then
-
-    if [ -n "$SH_GMP_VER" ]; then
-      rm -f gmp-$SH_GMP_VER.tar.$SH_GMP_TARBALL_TYPE
-    fi
-
-    if [ -n "$SH_MPFR_VER" ]; then
-      rm -f mpfr-$SH_MPFR_VER.tar.$SH_MPFR_TARBALL_TYPE
-    fi
-
-    if [ -n "$SH_MPC_VER" ]; then
-      rm -f mpc-$SH_MPC_VER.tar.$SH_MPC_TARBALL_TYPE
-    fi
-
-    if [ -n "$ARM_GMP_VER" ]; then
-      rm -f gmp-$ARM_GMP_VER.tar.$ARM_GMP_TARBALL_TYPE
-    fi
-
-    if [ -n "$ARM_MPFR_VER" ]; then
-      rm -f mpfr-$ARM_MPFR_VER.tar.$ARM_MPFR_TARBALL_TYPE
-    fi
-
-    if [ -n "$ARM_MPC_VER" ]; then
-      rm -f mpc-$ARM_MPC_VER.tar.$ARM_MPC_TARBALL_TYPE
-    fi
-
+    cleanup_dependencies "sh" "package"
+    cleanup_dependencies "arm" "package"
   fi
 
   if [ -f "gdb-$GDB_VER.tar.$GDB_TARBALL_TYPE" ]; then
@@ -89,7 +97,6 @@ if [ -z $KEEP_DOWNLOADS ]; then
 
   echo "Done!"
   echo "---------------------------------------"
-
 fi
 
 # Clean up unpacked sources...
@@ -100,39 +107,16 @@ rm -rf binutils-$SH_BINUTILS_VER binutils-$ARM_BINUTILS_VER \
        *.stamp	   
 
 if [ "$USE_CUSTOM_DEPENDENCIES" == "1" ]; then
-
-  if [ -n "$SH_GMP_VER" ]; then
-    rm -rf gmp-$SH_GMP_VER
-  fi
-
-  if [ -n "$SH_MPFR_VER" ]; then
-    rm -rf mpfr-$SH_MPFR_VER
-  fi
-
-  if [ -n "$SH_MPC_VER" ]; then
-    rm -rf mpc-$SH_MPC_VER
-  fi
-
-  if [ -n "$ARM_GMP_VER" ]; then
-    rm -rf gmp-$ARM_GMP_VER
-  fi
-
-  if [ -n "$ARM_MPFR_VER" ]; then
-    rm -rf mpfr-$ARM_MPFR_VER
-  fi
-
-  if [ -n "$ARM_MPC_VER" ]; then
-    rm -rf mpc-$ARM_MPC_VER
-  fi
-
+  cleanup_dependencies "sh" "dir"
+  cleanup_dependencies "arm" "dir"
 fi
 
 if [ -d "gdb-$GDB_VER" ]; then
-    rm -rf gdb-$GDB_VER
+  rm -rf gdb-$GDB_VER
 fi
 
 if [ -d "insight-$INSIGHT_VER" ]; then
-    rm -rf insight-$INSIGHT_VER
+  rm -rf insight-$INSIGHT_VER
 fi
 
 echo "Done!"
@@ -143,11 +127,11 @@ echo "Cleaning up build directories..."
 
 make="make"
 if ! [ -z "$(command -v gmake)" ]; then
-	make="gmake"
+  make="gmake"
 fi
 
 # Cleaning up build directories.
-${make} clean
+${make} clean > /dev/null 2>&1
 
 echo "Done!"
 echo "---------------------------------------"
@@ -158,7 +142,7 @@ if [ "$DELETE_LOGS" == "1" ]; then
 
   if [ -d "logs/" ]; then
     rm -f logs/*.log
-	  rmdir logs/
+    rmdir logs/
   fi
 
   echo "Done!"
@@ -166,7 +150,6 @@ if [ "$DELETE_LOGS" == "1" ]; then
 fi
 
 if [ -z $KEEP_DOWNLOADS ]; then
-
   # Clean up config.guess
   echo "Cleaning up ${CONFIG_GUESS}..."
 
@@ -175,5 +158,4 @@ if [ -z $KEEP_DOWNLOADS ]; then
   fi
 
   echo "Done!"
-
 fi

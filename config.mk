@@ -44,9 +44,11 @@ arm_gcc_ver=8.4.0
 sh_gmp_ver=6.1.0
 sh_mpfr_ver=3.1.4
 sh_mpc_ver=1.0.3
+sh_isl_ver=0.18
 arm_gmp_ver=6.1.0
 arm_mpfr_ver=3.1.4
 arm_mpc_ver=1.0.3
+arm_isl_ver=0.18
 
 # GCC threading model (single|kos)
 # With GCC 4.x versions and up, the patches provide a 'kos' thread model, so you 
@@ -94,9 +96,11 @@ arm_gcc_tarball_type=xz
 sh_gmp_tarball_type=bz2
 sh_mpfr_tarball_type=bz2
 sh_mpc_tarball_type=gz
+sh_isl_tarball_type=bz2
 arm_gmp_tarball_type=bz2
 arm_mpfr_tarball_type=bz2
 arm_mpc_tarball_type=gz
+arm_isl_tarball_type=bz2
 
 # Install mode (install-strip|install)
 # Use 'install-strip' mode for removing debugging symbols of the toolchains

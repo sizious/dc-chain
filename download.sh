@@ -9,26 +9,6 @@ while [ "$1" != "" ]; do
         --config-guess-only)
             CONFIG_GUESS_ONLY=1
             ;;
-        --no-gmp)
-            unset SH_GMP_VER
-            unset ARM_GMP_VER
-            ;;
-        --no-mpfr)
-            unset SH_MPFR_VER
-            unset ARM_MPFR_VER
-            ;;
-        --no-mpc)
-            unset SH_MPC_VER
-            unset ARM_MPC_VER
-            ;;
-        --no-deps)
-            unset SH_GMP_VER
-            unset ARM_GMP_VER
-            unset SH_MPFR_VER
-            unset ARM_MPFR_VER
-            unset SH_MPC_VER
-            unset ARM_MPC_VER
-            ;;
         *)
             echo "error: unknown parameter \"$PARAM\""
             exit 1
@@ -70,23 +50,28 @@ function download_dependencies()
   local gmp_ver=$SH_GMP_VER
   local mpfr_ver=$SH_MPFR_VER
   local mpc_ver=$SH_MPC_VER
+  local isl_ver=$SH_ISL_VER
   local gmp_tarball_type=$SH_GMP_TARBALL_TYPE
   local mpfr_tarball_type=$SH_MPFR_TARBALL_TYPE
   local mpc_tarball_type=$SH_MPC_TARBALL_TYPE
+  local isl_tarball_type=$SH_ISL_TARBALL_TYPE
 
   if [ "$arch" == "arm" ]; then
     gmp_ver=$ARM_GMP_VER
     mpfr_ver=$ARM_MPFR_VER
     mpc_ver=$ARM_MPC_VER
+    isl_ver=$ARM_ISL_VER
     gmp_tarball_type=$ARM_GMP_TARBALL_TYPE
     mpfr_tarball_type=$ARM_MPFR_TARBALL_TYPE
     mpc_tarball_type=$ARM_MPC_TARBALL_TYPE
+    isl_tarball_type=$ARM_ISL_TARBALL_TYPE
   fi
 
   if [ "$USE_CUSTOM_DEPENDENCIES" == "1" ]; then
     download "GMP"  "$gmp_ver"   "gcc.gnu.org/pub/gcc/infrastructure/gmp-$gmp_ver.tar.$gmp_tarball_type"
     download "MPFR" "$mpfr_ver"  "gcc.gnu.org/pub/gcc/infrastructure/mpfr-$mpfr_ver.tar.$mpfr_tarball_type"
     download "MPC"  "$mpc_ver"   "gcc.gnu.org/pub/gcc/infrastructure/mpc-$mpc_ver.tar.$mpc_tarball_type"
+    download "ISL"  "$isl_ver"   "gcc.gnu.org/pub/gcc/infrastructure/isl-$isl_ver.tar.$isl_tarball_type"
   fi
 }
 

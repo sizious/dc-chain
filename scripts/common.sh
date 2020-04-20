@@ -52,14 +52,18 @@ export USE_CUSTOM_DEPENDENCIES=`get_make_var use_custom_dependencies`
 export SH_GMP_VER=`get_make_var sh_gmp_ver`
 export SH_MPFR_VER=`get_make_var sh_mpfr_ver`
 export SH_MPC_VER=`get_make_var sh_mpc_ver`
+export SH_ISL_VER=`get_make_var sh_isl_ver`
 export ARM_GMP_VER=`get_make_var arm_gmp_ver`
 export ARM_MPFR_VER=`get_make_var arm_mpfr_ver`
 export ARM_MPC_VER=`get_make_var arm_mpc_ver`
+export ARM_ISL_VER=`get_make_var arm_isl_ver`
 
 export SH_GMP_TARBALL_TYPE=`get_make_var sh_gmp_tarball_type`
 export SH_MPFR_TARBALL_TYPE=`get_make_var sh_mpfr_tarball_type`
 export SH_MPC_TARBALL_TYPE=`get_make_var sh_mpc_tarball_type`
+export SH_ISL_TARBALL_TYPE=`get_make_var sh_isl_tarball_type`
 export ARM_GMP_TARBALL_TYPE=`get_make_var arm_gmp_tarball_type`
 export ARM_MPFR_TARBALL_TYPE=`get_make_var arm_mpfr_tarball_type`
 export ARM_MPC_TARBALL_TYPE=`get_make_var arm_mpc_tarball_type`
+export ARM_ISL_TARBALL_TYPE=`get_make_var arm_isl_tarball_type`
 
