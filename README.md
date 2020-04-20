@@ -1,53 +1,140 @@
 # Sega Dreamcast Toolchain Maker (`dc-chain`)
 
-This directory contains a set of files which both simplifies building the whole 
-**Sega Dreamcast** toolchain and gives you substantial control.
+The **Sega Dreamcast Toolchain Maker** (`dc-chain`) utility is a set of files
+made for building all the needed toolchains used in **Sega Dreamcast** 
+programming under the **KallistiOS** environment. It was first released by 
+*Jim Ursetto* back in 2004 and was initially adapted from *Stalin*'s build 
+script v0.3. This utility is part of **KallistiOS**.
 
-The whole toolchain for the Dreamcast is composed by:
+By using this utility, 2 toolchains will be built for **Dreamcast** development:
 
-- A `sh-elf` toolchain, which is the main toolchain as it targets the CPU of the 
-**Dreamcast**, i.e. the **Hitachi SH-4 CPU** (**SuperH**).
+- A `sh-elf` toolchain, which is the main toolchain as it targets the CPU of the
+  **Dreamcast**, i.e. the **Hitachi SH-4 CPU** (a.k.a. **SuperH**).
 - An `arm-eabi` toolchain, which is the toolchain used only for the **Yamaha
-Super Intelligent Sound Processor** (**AICA**). This processor is based
-on an **ARM7** core.
+  Super Intelligent Sound Processor** (**AICA**). This processor is based 
+  on an **ARM7** core. Under **KallistiOS**, only the sound driver is compiled
+  with that toolchain, so you won't need to use it directly.
 
-The **dc-chain** package is ready to build everything you need to compile
-**KallistiOS** and then develop for the **Sega Dreamcast** system.
+The `dc-chain` package will build everything you need to compile **KallistiOS**
+and then finally develop for the **Sega Dreamcast** system. Please note that
+`dc-chain` optimize the both toolchains for use with **KallistiOS** so if you
+plan to use another **Dreamcast** library (e.g. `libronin`), `dc-chain` may 
+not be so useful for you, at least *out-of-the-box*.
 
-## Toolchains overview
+## Overview
 
-Components included in the toolchains are:
+Components included in the toolchains built through `dc-chain` are:
 
-- **Binutils** (mainly `ld` plus other tools)
-- **GNU Compiler Collection** (`gcc`)
-- **Newlib** (mainly `libc` plus other libraries)
-- **GNU Debugger** (`gdb`) - Optional
+- **Binutils** (mainly `ld` plus other tools);
+- **GNU Compiler Collection** (`gcc`, `g++`);
+- **Newlib** (mainly `libc` plus other libraries);
+- **GNU Debugger** (`gdb`) - Optional;
+- **Insight** (A `gdb` UI based on **X11**) - Optional.
 
-Binutils and GCC are installed for both targets (i.e. `sh-elf` and `arm-eabi`)
-where Newlib and GNU Debugger (GDB) are installed only for the main
-toolchain (`sh-elf`).
+**Binutils** and **GCC** are installed for both targets (i.e. `sh-elf` and 
+`arm-eabi`) where **Newlib** and **GNU Debugger** (**GDB**) are needed only 
+for the main toolchain (`sh-elf`).
+
+## Getting started
+
+Before you start, please browse the `./doc` directory and check if they are
+full instructions for building the whole toolchain for your environment. A big
+effort was put to simplify the building process as much as possible, for all
+modern environments, mainly **Linux** (including **BSD**), **macOS** and
+**Windows**.
+
+### `dc-chain` utility installation
+
+`dc-chain` is part of **KallistiOS** so you should have it in the 
+`$KOS_BASE/utils/dc-chain` directory. You don't need to have **KallistiOS** 
+configured (i.e. have the `$KOS_BASE/environ.sh` file created) as building 
+toolchains is a prerequisite in order to build **KallistiOS** itself.
+
+### Prerequisites installation
+
+You'll need your host toolchain (i.e. the regular `gcc` plus additional tools)
+for your computer installed. Indeed, to build the cross-compilers you'll need a
+working compilation environment. 
+
+Everything is described in the `./doc` directory.
 
 ## Configuration
 
-If you want to tweak your setup, open the `config.mk` file in your favorite
-editor.
+The recommanded settings are already set but if you want to tweak your setup,
+feel free to open the `config.mk` file in your favorite editor.
+
+Please find below every parameter available in the `config.mk` file.
+
+### Toolchain Base
+
+`toolchain_base` indicates the root directory where toolchains will be
+installed. This should match your `environ.sh` configuration. Default is 
+`/opt/toolchains/dc`.
+
+In clear, after building the toolchains, you'll have two additional directories:
+
+- `/opt/toolchains/dc/arm-eabi`;
+- `/opt/toolchains/dc/sh-elf`.
+
+### Components versions
+
+All component's version of the toolchains are declared in the `config.mk` file.
+
+For the `sh-elf` toolchain, they are:
+
+- `sh_binutils_ver`
+- `sh_gcc_ver`
+- `newlib_ver`
+- `gdb_ver`
+- `insight_ver`
+
+For the `arm-eabi` toolchain, they are:
+
+- `arm_binutils_ver`
+- `arm_gcc_ver`
 
 Speaking about the best versions of the components to use for the Dreamcast
-development, they are already declared in the `Makefile`.
+development, they are already set in the `config.mk` file.
 
-The most well tested combination is GCC 4.7.4 with Newlib 2.0.0, for both
-targets but there are also newer possibilities that are in testing (GCC 9.3.0
-with Newlib 3.3.0)..
+The most well tested combination is GCC `4.7.4` with Newlib `2.0.0` for both
+targets (`sh-elf` and `arm-eabi`) but there are also newer possibilities that
+are in testing, which are currently set; GCC `9.3.0` with Newlib `3.3.0` for
+`sh-elf` and GCC `8.4.0` for `arm-eabi`. **Note:** The GCC's maximum version
+number possible for the `arm-eabi` toolchain is `8.4.0`. Support of the
+**ARM7** chip is dropped after that GCC version.
 
-The GCC's maximum version number possible for the `arm-eabi` toolchain is
-`8.4.0`. In GCC 9, the ARM7 CPU used in the Dreamcast is not anymore available.
+You have the possibility to use custom dependencies for GCC directly in the
+`config.mk` file. In that case, you have to define `use_custom_dependencies=1`.
+Doing so will use your custom versions of **GMP**, **MPC**, **MPFR** and 
+**ISL** rather than the provided versions with GCC.
 
-## Advanced options
+Please note that you have the possibility to specify the `tarball_type` 
+extensions you want to download too; this may be useful if a package
+changes its extension on the servers.
+
+### GCC threading model
+
+With GCC 4.x versions and up, the patches provide a `kos` thread model, so you 
+should use it. If you really don't want threading support for C++, Objective C
+or Objective C++, you can set this to `single`. With GCC 3.x, you probably 
+want `posix` here; but this mode is deprecated as the GCC 3.x branch is not
+supported anymore.
+
+### Erase
+
+Set the `erase` flag to `1` to remove build directories on the fly to save 
+space.
+
+### Verbose
+
+Set `verbose` to `1` to display output to screen as well as log files.
+
+### Make Jobs
 
 You may attempt to spawn multiple jobs with `make`. Using `make -j2` is
 recommended for speeding up the building of the toolchain. There is an option 
-inside the `Makefile` to set the number of jobs for the building phases.
-Set the `makejobs` variable in the `Makefile` to whatever you would normally
+inside the `config.mk` to set the number of jobs for the building phases.
+Set the `makejobs` variable in the `config.mk` to whatever you would normally
 feel the need to use on the command line, and it will do the right thing.
 
 In the old times, this option may breaks things, so, if you run into
@@ -56,17 +143,51 @@ job running.
 
 On **MinGW/MSYS** environment, it has been confirmed that multiple jobs breaks
 the toolchain, so please don't try to do that under this environment. This
-option is disabled by default in this scenario. This doesn't apply to the
-others environments, including **MinGW-w64/MSYS2**.
+option is disabled by default in this scenario. This doesn't apply to 
+**MinGW-w64/MSYS2**.
+
+Under the **WSL** environment (**Windows Subsystem for Linux**), the maximum
+is `2` jobs in parallel.
+
+### Languages
+
+Use the `pass2_languages` variable to declare the languages you want to use.
+The default is to enable **C**, **C++**, **Objective C** and **Objective C++**.
+You may remove the latter two if you don't want them.
+
+### Download Protocol
+
+You may have the possibility to change the download protocol used when
+downloading the packages.
+
+Set the `download_protocol` variable to `https` or `ftp` as you want.
+Default is `https`.
+
+### Install Mode
+
+Set this to `install` if you want to debug the toolchains themselves or keep
+this to `install_mode` if you just want to use the produced toolchains in
+**release** mode.
+
+### Standalone Binaries (MinGW/MSYS only)
+
+Set `standalone_binary` to `1` if you want to build static binaries, which may
+be run outside the MinGW/MSYS environment. This flag has no effect on the others
+OS.
+
+Building static binaries are useful only if you plan to use an IDE on Windows.
+This flag is here mainly for producing [DreamSDK](https://dreamsdk.org).
 
 ## Usage
 
-Before you start, please browse the `./doc` directory and check if they are
-full instructions for building the whole toolchain for your environment.
+After installing all the prerequisites and tweaking the configuration, it's time
+to build the toolchains.
+
 
 ### Making the toolchain
 
-Below you will find some generic instructions:
+Below you will find some generic instructions; you may find some specific
+instructions in the `./doc` directory for your OS.
 
 1. Change the variables in the `config.mk` file to match your environment. 
    They can be overridden at the command line as well. Please note, a lot of
@@ -94,8 +215,8 @@ you can make it by entering:
 
 	make gdb
 
-This will install `gdb` in the `sh-elf` toolchain (`gdb` is used with
-`dcload/dc-tool` programs, which are part of **KallistiOS** too).
+This will install `gdb` in the `sh-elf` toolchain. `gdb` is used with
+`dcload/dc-tool` programs, which are part of **KallistiOS** too, in order to do remote debugging of your **Dreamcast** programs.
 
 ### Removing all useless files
 
@@ -103,8 +224,10 @@ After the toolchain compilation, you can cleanup everything by entering:
 
 	./cleanup.sh
 
-This will save a lot of space.
+This will save a lot of space by removing all unnecessary files.
 
 ## Final note
 
-Please see the comments at the top of the `Makefile` for more build options.
+Please see the comments at the top of the `config.mk` file for more build
+options. For example if something goes wrong, you may restart the compilation
+of the bogus step only rather than running the whole process again (e.g. to rebuild only `sh-elf-gcc`, you may run `make build-sh4-gcc`).
