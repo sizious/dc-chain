@@ -9,6 +9,10 @@ insight_name = insight-$(insight_ver)a
 insight_file = $(insight_name).tar.$(insight_tarball_type)
 insight_url  = $(download_protocol)://sourceware.org/pub/insight/releases/$(insight_file)
 
+stamp_insight_unpack = insight_unpack.stamp
+stamp_insight_build = insight_build.stamp
+stamp_insight_install = insight_install.stamp
+
 $(insight_file):
 	@echo "+++ Downloading Insight..."
 ifndef USE_CURL
@@ -17,9 +21,9 @@ else
 	curl -O -J $(insight_url)
 endif
 
-unpack_insight: $(insight_file) unpack_insight_stamp
+unpack_insight: $(insight_file) $(stamp_insight_unpack)
 
-unpack_insight_stamp:
+$(stamp_insight_unpack):
 	@echo "+++ Unpacking Insight..."
 	rm -f $@
 	rm -rf $(insight_name)
@@ -28,9 +32,9 @@ unpack_insight_stamp:
 
 build_insight: log = $(logdir)/$(insight_name).log
 build_insight: logdir
-build_insight: unpack_insight build_insight_stamp
+build_insight: unpack_insight $(stamp_insight_build)
 
-build_insight_stamp:
+$(stamp_insight_build):
 	@echo "+++ Building Insight..."
 	rm -f $@
 	> $(log)
@@ -48,9 +52,9 @@ build_insight_stamp:
 
 install_insight: log = $(logdir)/$(insight_name).log
 install_insight: logdir
-install_insight: build_insight install_insight_stamp
+install_insight: build_insight $(stamp_insight_install)
 
-install_insight_stamp:
+$(stamp_insight_install):
 	@echo "+++ Installing Insight..."
 	rm -f $@
 	$(MAKE) -C build-$(insight_name) $(install_mode) DESTDIR=$(DESTDIR) $(to_log)
