@@ -1,3 +1,10 @@
+# Sega Dreamcast Toolchain Maker (dc-chain)
+# This file is part of KallistiOS.
+#
+# Created by Jim Ursetto (2004)
+# Initially adapted from Stalin's build script version 0.3.
+#
+
 # If erase=1, erase build directories on the fly.
 ifeq (1,$(erase))
   define clean_up

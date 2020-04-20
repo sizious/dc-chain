@@ -1,3 +1,10 @@
+# Sega Dreamcast Toolchain Maker (dc-chain)
+# This file is part of KallistiOS.
+#
+# Created by Jim Ursetto (2004)
+# Initially adapted from Stalin's build script version 0.3.
+#
+
 insight_name = insight-$(insight_ver)a
 insight_file = $(insight_name).tar.$(insight_tarball_type)
 insight_url  = $(download_protocol)://sourceware.org/pub/insight/releases/$(insight_file)

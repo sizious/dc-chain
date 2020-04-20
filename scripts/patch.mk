@@ -1,3 +1,10 @@
+# Sega Dreamcast Toolchain Maker (dc-chain)
+# This file is part of KallistiOS.
+#
+# Created by Jim Ursetto (2004)
+# Initially adapted from Stalin's build script version 0.3.
+#
+
 binutils_patches 	:= $(wildcard $(patches)/binutils-$(binutils_ver)*.diff)
 gcc_patches    		:= $(wildcard $(patches)/gcc-$(sh_gcc_ver)*.diff)
 newlib_patches 		:= $(wildcard $(patches)/newlib-$(newlib_ver)*.diff)

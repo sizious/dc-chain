@@ -4,10 +4,10 @@
 # Created by Jim Ursetto (2004)
 # Initially adapted from Stalin's build script version 0.3.
 #
+
 # This Makefile determines on what platform we are running. Instead of the
 # 'Makefile.hostdetect' included in dcload packages, this version uses
 # the 'config.guess' mecanism which is more complete and accurate.
-#
 
 # Check the presence of ./config.guess
 # This will help a lot to execute conditional steps depending on the host.
