@@ -25,7 +25,7 @@ $(build_binutils): logdir
         $(static_flag) \
         $(to_log)
 	$(MAKE) $(makejobs) -C $(build) DESTDIR=$(DESTDIR) $(to_log)
-	$(MAKE) -C $(build) $(install_mode) DESTDIR=$(DESTDIR) $(to_log)
+	$(MAKE) -C $(build) install DESTDIR=$(DESTDIR) $(to_log)
 # MinGW/MSYS
 # This part is about BFD for sh-elf target.
 # It will move sh-elf libbfd into a nicer place, as our cross-compiler is made 
@@ -35,7 +35,7 @@ $(build_binutils): logdir
 # Note: BFD for sh-elf is used for compiling dc-tool. Others platforms uses libelf.
 	if test "$(target)" = "$(sh_target)" && ! test -z "$(libbfd_src_bin_dir)"; then \
 		echo "+++ Installing Binary File Descriptor library (libbfd) for $(target)..."; \
-		$(MAKE) -C $(build)/zlib $(install_mode) DESTDIR=$(DESTDIR) $(to_log); \
+		$(MAKE) -C $(build)/zlib install DESTDIR=$(DESTDIR) $(to_log); \
 		if ! test -d "$(sh_prefix)/include/"; then \
 			mkdir $(sh_prefix)/include/; \
 		fi; \

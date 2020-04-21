@@ -57,7 +57,7 @@ install_insight: build_insight $(stamp_insight_install)
 $(stamp_insight_install):
 	@echo "+++ Installing Insight..."
 	rm -f $@
-	$(MAKE) -C build-$(insight_name) $(install_mode) DESTDIR=$(DESTDIR) $(to_log)
+	$(MAKE) -C build-$(insight_name) install DESTDIR=$(DESTDIR) $(to_log)
 	touch $@
 
 insight: install_insight
