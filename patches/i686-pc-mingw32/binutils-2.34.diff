@@ -1,0 +1,30 @@
+diff -ruN binutils-2.34/libctf/ctf-create.c binutils-2.34-mingw/libctf/ctf-create.c
+--- binutils-2.34/libctf/ctf-create.c	2020-01-18 13:55:48 +0000
++++ binutils-2.34-mingw/libctf/ctf-create.c	2020-04-21 18:54:55 +0000
+@@ -23,6 +23,11 @@
+ #include <string.h>
+ #include <zlib.h>
+ 
++/* MinGW doesn't have EOVERFLOW */
++#ifndef EOVERFLOW
++#define EOVERFLOW EFBIG
++#endif
++
+ #ifndef roundup
+ #define roundup(x, y)  ((((x) + ((y) - 1)) / (y)) * (y))
+ #endif
+diff -ruN binutils-2.34/libctf/ctf-subr.c binutils-2.34-mingw/libctf/ctf-subr.c
+--- binutils-2.34/libctf/ctf-subr.c	2020-01-18 13:55:48 +0000
++++ binutils-2.34-mingw/libctf/ctf-subr.c	2020-04-21 18:54:20 +0000
+@@ -26,6 +26,11 @@
+ #include <string.h>
+ #include <unistd.h>
+ 
++/* MinGW doesn't have ENOTSUP */
++#ifndef ENOTSUP
++#define ENOTSUP ENOSYS
++#endif
++
+ int _libctf_version = CTF_VERSION;	      /* Library client version.  */
+ int _libctf_debug = 0;			      /* Debugging messages enabled.  */
+ 
