@@ -12,8 +12,3 @@ pwd          := $(shell pwd)
 patches      := $(pwd)/patches
 logdir       := $(pwd)/logs
 PATH         := $(sh_prefix)/bin:$(arm_prefix)/bin:$(PATH)
-
-# Source directories
-binutils_dir  = binutils-$(binutils_ver)
-gcc_dir       = gcc-$(sh_gcc_ver)
-newlib_dir    = newlib-$(newlib_ver)

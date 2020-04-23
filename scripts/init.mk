@@ -5,6 +5,16 @@
 # Initially adapted from Stalin's build script version 0.3.
 #
 
+# Catch-all: CXX
+ifeq ($(CXX),)
+  CXX := "g++"
+endif
+
+# Catch-all: CC
+ifeq ($(CC),)
+  CC := "gcc"
+endif
+
 # MinGW/MSYS
 # Check the MSYS POSIX emulation layer version...
 #
@@ -83,11 +93,6 @@ ifdef CYGWIN
   CC := "$(CC) -D_GNU_SOURCE"
 endif
 
-# Catch-all: CXX must be defined
-ifeq ($(CXX),)
-  CXX := g++
-endif
-
 # Set static flags to pass to configure if needed
 ifeq ($(standalone_binary),1)
   ifndef MINGW
@@ -102,6 +107,8 @@ endif
 ifdef MINGW
   makejobs=
 endif
+
 ifdef WSL
   makejobs=-j2
 endif
+

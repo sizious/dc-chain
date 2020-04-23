@@ -33,7 +33,7 @@ $(build_binutils): logdir
 # See: https://www.sourceware.org/ml/binutils/2004-03/msg00337.html
 # Also, install zlib at the same time as we need it to use libbfd.
 # Note: BFD for sh-elf is used for compiling dc-tool. Others platforms uses libelf.
-	if test "$(target)" = "$(sh_target)" && ! test -z "$(libbfd_src_bin_dir)"; then \
+	@if test "$(target)" = "$(sh_target)" && ! test -z "$(libbfd_src_bin_dir)"; then \
 		echo "+++ Installing Binary File Descriptor library (libbfd) for $(target)..."; \
 		$(MAKE) -C $(build)/zlib install DESTDIR=$(DESTDIR) $(to_log); \
 		if ! test -d "$(sh_prefix)/include/"; then \

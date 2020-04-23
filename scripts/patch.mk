@@ -5,53 +5,64 @@
 # Initially adapted from Stalin's build script version 0.3.
 #
 
-binutils_patches 	:= $(wildcard $(patches)/binutils-$(binutils_ver)*.diff)
-gcc_patches    		:= $(wildcard $(patches)/gcc-$(sh_gcc_ver)*.diff)
-newlib_patches 		:= $(wildcard $(patches)/newlib-$(newlib_ver)*.diff)
-kos_patches    		:= $(wildcard $(patches)/kos-*.diff)
+patch: patch-sh4 patch-arm patch-kos
+patch-sh4: patch-sh4-binutils patch-sh4-gcc patch-sh4-newlib
+patch-arm: patch-arm-binutils patch-arm-gcc
 
-ifdef MINGW
-# Additional patches for MinGW/MSYS
-  binutils_patches	+= $(wildcard $(patches)/$(host_triplet)/binutils-$(binutils_ver)*.diff)	
-endif
+# Ensure that, no matter where we enter, prefix and target are set correctly.
+patch_sh4_targets = patch-sh4-binutils patch-sh4-gcc patch-sh4-newlib
+patch_arm_targets = patch-arm-binutils patch-arm-gcc
 
-stamp_patch_binutils = patch-binutils.stamp
-stamp_patch_gcc      = patch-gcc.stamp
-stamp_patch_newlib   = patch-newlib.stamp
-stamp_patch_kos      = patch-kos.stamp
+# Available targets for SH
+$(patch_sh4_targets): gcc_ver = $(sh_gcc_ver)
+$(patch_sh4_targets): binutils_ver = $(sh_binutils_ver)
 
-patch_targets = patch-binutils patch-gcc patch-newlib patch-kos
+# Available targets for ARM
+$(patch_arm_targets): gcc_ver = $(arm_gcc_ver)
+$(patch_arm_targets): binutils_ver = $(arm_binutils_ver)
 
-patch: $(patch_targets)
+# To avoid code repetition, we use the same commands for both architectures.
+# But we can't create a single target called 'patch-binutils' for both sh4 and
+# arm, because phony targets can't be run multiple times. So we create multiple
+# targets.
+patch_binutils      = patch-sh4-binutils patch-arm-binutils
+patch_gcc           = patch-sh4-gcc patch-arm-gcc
+patch_newlib        = patch-sh4-newlib
+patch_kos           = patch-kos
+
+# This is a common 'patch_apply' function used in all the cases
+define patch_apply
+	@patches=$$(echo "$(diff_patches)" | xargs); \
+	if ! test -f "$@.stamp" && ! test -z "$${patches}"; then \
+		patch -N -d $(src_dir) -p1 < $${patches}; \
+		touch "$@.stamp"; \
+	fi;
+endef
 
 # Binutils
-patch-binutils: $(binutils_patches)
-	@touch $(stamp_patch_binutils)
-$(binutils_patches):
-	@if ! test -f "$(stamp_patch_binutils)"; then \
-		patch -N -d $(binutils_dir) -p1 < $@; \
-	fi;
+$(patch_binutils): src_dir = binutils-$(binutils_ver)
+$(patch_binutils): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
+$(patch_binutils): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
+$(patch_binutils):
+	$(call patch_apply)
 
 # GNU Compiler Collection (GCC)
-patch-gcc: $(gcc_patches)
-	@touch $(stamp_patch_gcc)
-$(gcc_patches):
-	@if ! test -f "$(stamp_patch_gcc)"; then \
-		patch -N -d $(gcc_dir) -p1 < $@; \
-	fi;
-	
+$(patch_gcc): src_dir = gcc-$(gcc_ver)
+$(patch_gcc): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
+$(patch_gcc): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
+$(patch_gcc):
+	$(call patch_apply)
+
 # Newlib
-patch-newlib: $(newlib_patches)
-	@touch $(stamp_patch_newlib)
-$(newlib_patches):
-	@if ! test -f "$(stamp_patch_newlib)"; then \
-		patch -N -d $(newlib_dir) -p1 < $@; \
-	fi;
+$(patch_newlib): src_dir = newlib-$(newlib_ver)
+$(patch_newlib): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
+$(patch_newlib): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
+$(patch_newlib):
+	$(call patch_apply)
 
 # KallistiOS
-patch-kos: $(kos_patches)
-	@touch $(stamp_patch_kos)
-$(kos_patches):
-	@if ! test -f "$(stamp_patch_kos)"; then \
-		patch -N -d $(kos_root) -p1 < $@; \
-	fi;
+$(patch_kos): src_dir = $(kos_root)
+$(patch_kos): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
+$(patch_kos): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
+$(patch_kos):
+	$(call patch_apply)
