@@ -24,7 +24,7 @@ toolchain_base=/opt/toolchains/dc
 sh_binutils_ver=2.34
 sh_gcc_ver=9.3.0
 newlib_ver=3.3.0
-gdb_ver=8.3.1
+gdb_ver=9.1
 insight_ver=6.8-1
 
 # Toolchain for ARM
