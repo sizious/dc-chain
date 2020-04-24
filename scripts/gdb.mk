@@ -14,10 +14,8 @@ stamp_gdb_patch = gdb_patch.stamp
 stamp_gdb_build = gdb_build.stamp
 stamp_gdb_install = gdb_install.stamp
 
-# Under MinGW/MSYS, fixes are needed
-ifdef MINGW
-  gdb_patches := $(wildcard $(patches)/$(host_triplet)/$(gdb_name)*.diff)	
-endif
+gdb_patches := $(wildcard $(patches)/$(gdb_name)*.diff)
+gdb_patches += $(wildcard $(patches)/$(host_triplet)/$(gdb_name)*.diff)
 
 $(gdb_file):
 	@echo "+++ Downloading GDB..."
@@ -31,17 +29,20 @@ unpack_gdb: $(gdb_file) $(stamp_gdb_unpack) $(stamp_gdb_patch)
 
 $(stamp_gdb_unpack):
 	@echo "+++ Unpacking GDB..."
-	rm -f $@
+	rm -f $@ $(stamp_gdb_patch)
 	rm -rf $(gdb_name)
 	tar xf $(gdb_file)
 	touch $@
 
 $(stamp_gdb_patch):
-	rm -f $@
-ifdef MINGW
-	patch -N -d $(gdb_name) -p1 < $(gdb_patches)
-endif
-	touch $@
+	@patches=$$(echo "$(gdb_patches)" | xargs); \
+	if ! test -f "$(stamp_gdb_patch)"; then \
+		if ! test -z "$${patches}"; then \
+			echo "+++ Patching GDB..."; \
+			patch -N -d $(gdb_name) -p1 < $${patches}; \
+		fi; \
+		touch "$(stamp_gdb_patch)"; \
+	fi;
 
 build_gdb: log = $(logdir)/$(gdb_name).log
 build_gdb: logdir
