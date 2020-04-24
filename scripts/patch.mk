@@ -38,7 +38,7 @@ define patch_apply
 	patches=$$(echo "$(diff_patches)" | xargs); \
 	if ! test -f "$${stamp_file}"; then \
 		if ! test -z "$${patches}"; then \
-			echo "+++ Patching $(patch_target_name) for $(target)..."; \
+			echo "+++ Patching $(patch_target_name)..."; \
 			patch -N -d $(src_dir) -p1 < $${patches}; \
 		fi; \
 		touch "$${stamp_file}"; \

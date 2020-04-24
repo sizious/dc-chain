@@ -65,9 +65,9 @@ feel free to open the `config.mk` file in your favorite editor.
 
 Please find below every parameter available in the `config.mk` file.
 
-### Toolchain Base
+### Toolchains Base
 
-`toolchain_base` indicates the root directory where toolchains will be
+`toolchains_base` indicates the root directory where toolchains will be
 installed. This should match your `environ.sh` configuration. Default is 
 `/opt/toolchains/dc`.
 
@@ -76,7 +76,7 @@ In clear, after building the toolchains, you'll have two additional directories:
 - `/opt/toolchains/dc/arm-eabi`;
 - `/opt/toolchains/dc/sh-elf`.
 
-### Components versions
+### Toolchains Components
 
 All component's version of the toolchains are declared in the `config.mk` file.
 
@@ -129,7 +129,7 @@ space.
 
 Set `verbose` to `1` to display output to screen as well as log files.
 
-### Make Jobs
+### Make jobs
 
 You may attempt to spawn multiple jobs with `make`. Using `make -j2` is
 recommended for speeding up the building of the toolchain. There is an option 
@@ -155,7 +155,7 @@ Use the `pass2_languages` variable to declare the languages you want to use.
 The default is to enable **C**, **C++**, **Objective C** and **Objective C++**.
 You may remove the latter two if you don't want them.
 
-### Download Protocol
+### Download protocol
 
 You may have the possibility to change the download protocol used when
 downloading the packages.
@@ -216,7 +216,8 @@ you can make it by entering:
 	make gdb
 
 This will install `gdb` in the `sh-elf` toolchain. `gdb` is used with
-`dcload/dc-tool` programs, which are part of **KallistiOS** too, in order to do remote debugging of your **Dreamcast** programs.
+`dcload/dc-tool` programs, which are part of **KallistiOS** too, in order to do
+remote debugging of your **Dreamcast** programs.
 
 ### Removing all useless files
 
@@ -228,6 +229,19 @@ This will save a lot of space by removing all unnecessary files.
 
 ## Final note
 
+Interesting targets (you can 'make' any of these):
+all: patch build
+patch: patch-gcc patch-newlib patch-kos
+build: build-sh4 build-arm
+build-sh4: build-sh4-binutils build-sh4-gcc
+build-arm: build-arm-binutils build-arm-gcc
+build-sh4-gcc: build-sh4-gcc-pass1 build-sh4-newlib build-sh4-gcc-pass2
+build-arm-gcc: build-arm-gcc-pass1
+build-sh4-newlib: build-sh4-newlib-only fixup-sh4-newlib
+gdb
+insight
+
 Please see the comments at the top of the `config.mk` file for more build
 options. For example if something goes wrong, you may restart the compilation
-of the bogus step only rather than running the whole process again (e.g. to rebuild only `sh-elf-gcc`, you may run `make build-sh4-gcc`).
+of the bogus step only rather than running the whole process again (e.g. to
+rebuild only `sh-elf-gcc`, you may run `make build-sh4-gcc`).
