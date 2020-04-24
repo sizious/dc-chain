@@ -34,7 +34,7 @@ patch_kos           = patch-kos
 
 # This is a common 'patch_apply' function used in all the cases
 define patch_apply
-	@stamp_file=$@.stamp; \
+	@stamp_file=patch-$(stamp_radical_name).stamp; \
 	patches=$$(echo "$(diff_patches)" | xargs); \
 	if ! test -f "$${stamp_file}"; then \
 		if ! test -z "$${patches}"; then \
@@ -48,6 +48,7 @@ endef
 # Binutils
 $(patch_binutils): patch_target_name = Binutils
 $(patch_binutils): src_dir = binutils-$(binutils_ver)
+$(patch_binutils): stamp_radical_name = $(src_dir)
 $(patch_binutils): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
 $(patch_binutils): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
 $(patch_binutils):
@@ -56,6 +57,7 @@ $(patch_binutils):
 # GNU Compiler Collection (GCC)
 $(patch_gcc): patch_target_name = GCC
 $(patch_gcc): src_dir = gcc-$(gcc_ver)
+$(patch_gcc): stamp_radical_name = $(src_dir)
 $(patch_gcc): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
 $(patch_gcc): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
 $(patch_gcc):
@@ -64,6 +66,7 @@ $(patch_gcc):
 # Newlib
 $(patch_newlib): patch_target_name = Newlib
 $(patch_newlib): src_dir = newlib-$(newlib_ver)
+$(patch_newlib): stamp_radical_name = $(src_dir)
 $(patch_newlib): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
 $(patch_newlib): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
 $(patch_newlib):
@@ -72,6 +75,7 @@ $(patch_newlib):
 # KallistiOS
 $(patch_kos): patch_target_name = KallistiOS
 $(patch_kos): src_dir = $(kos_root)
+$(patch_kos): stamp_radical_name = kos
 $(patch_kos): diff_patches := $(wildcard $(patches)/$(src_dir)*.diff)
 $(patch_kos): diff_patches += $(wildcard $(patches)/$(host_triplet)/$(src_dir)*.diff)
 $(patch_kos):

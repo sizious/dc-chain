@@ -5,8 +5,8 @@
 # Initially adapted from Stalin's build script version 0.3.
 #
 
-sh_prefix    := $(toolchain_base)/$(sh_target)
-arm_prefix   := $(toolchain_base)/$(arm_target)
+sh_prefix    := $(toolchains_base)/$(sh_target)
+arm_prefix   := $(toolchains_base)/$(arm_target)
 install       = $(prefix)/bin
 pwd          := $(shell pwd)
 patches      := $(pwd)/patches
