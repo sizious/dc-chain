@@ -85,11 +85,11 @@ arm_isl_tarball_type=bz2
 # is not anymore supported.
 thread_model=kos
 
-# GCC install mode (install-strip|install)
-# Use 'install-strip' mode for removing debugging symbols of the toolchains
+# Install mode (install-strip|install)
+# Use 'install-strip' mode for removing debugging symbols of the toolchains.
 # Use 'install' to enable debug symbols for the toolchains. This may be
 # useful only if you plan to debug the toolchain itself!
-gcc_install_mode=install-strip
+install_mode=install-strip
 
 # Toolchains base
 # Indicate the root directory where toolchains will be installed

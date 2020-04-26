@@ -27,5 +27,5 @@ $(build_gcc_pass2): logdir
           $(static_flag) \
           $(to_log)
 	$(MAKE) $(makejobs) -C $(build) DESTDIR=$(DESTDIR) $(to_log)
-	$(MAKE) -C $(build) $(gcc_install_mode) DESTDIR=$(DESTDIR) $(to_log)
+	$(MAKE) -C $(build) $(install_mode) DESTDIR=$(DESTDIR) $(to_log)
 	$(clean_up)

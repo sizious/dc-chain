@@ -69,10 +69,20 @@ install_gdb: log = $(logdir)/$(gdb_name).log
 install_gdb: logdir
 install_gdb: build_gdb $(stamp_gdb_install)
 
+# The 'install-strip' mode support is partial in GDB so there is a little hack
+# below to remove useless debug symbols
+# See: https://sourceware.org/legacy-ml/gdb-patches/2012-01/msg00335.html
 $(stamp_gdb_install):
 	@echo "+++ Installing GDB..."
 	rm -f $@
 	$(MAKE) -C build-$(gdb_name) install DESTDIR=$(DESTDIR) $(to_log)
+	@if test "$(install_mode)" = "install-strip"; then \
+		$(MAKE) -C build-$(gdb_name)/gdb $(install_mode) DESTDIR=$(DESTDIR) $(to_log); \
+		gdb_run=$(sh_prefix)/bin/$(sh_target)-run$(executable_extension); \
+		if test -f $${gdb_run}; then \
+			strip $${gdb_run}; \
+		fi; \
+	fi;
 	touch $@
 
 gdb: install_gdb

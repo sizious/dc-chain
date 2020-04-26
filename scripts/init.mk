@@ -103,6 +103,11 @@ ifeq ($(standalone_binary),1)
   static_flag := --enable-static --disable-shared "LDFLAGS=--static"
 endif
 
+# For all Windows systems (i.e. Cygwin, MinGW/MSYS and MinGW-w64/MSYS2)
+ifdef WINDOWS
+  executable_extension=.exe
+endif
+
 # Handle makejobs exceptions
 ifdef MINGW
   makejobs=
