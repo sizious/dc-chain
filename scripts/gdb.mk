@@ -44,7 +44,7 @@ $(stamp_gdb_patch):
 		touch "$(stamp_gdb_patch)"; \
 	fi;
 
-build_gdb: log = $(logdir)/$(gdb_name).log
+build_gdb: log = $(logdir)/build-$(gdb_name).log
 build_gdb: logdir
 build_gdb: unpack_gdb $(stamp_gdb_build)
 
@@ -65,7 +65,7 @@ $(stamp_gdb_build):
 	$(MAKE) $(makejobs) -C build-$(gdb_name) $(to_log)
 	touch $@
 
-install_gdb: log = $(logdir)/$(gdb_name).log
+install_gdb: log = $(logdir)/build-$(gdb_name).log
 install_gdb: logdir
 install_gdb: build_gdb $(stamp_gdb_install)
 

@@ -30,7 +30,7 @@ $(stamp_insight_unpack):
 	tar xf $(insight_file)
 	touch $@
 
-build_insight: log = $(logdir)/$(insight_name).log
+build_insight: log = $(logdir)/build-$(insight_name).log
 build_insight: logdir
 build_insight: unpack_insight $(stamp_insight_build)
 
@@ -50,7 +50,7 @@ $(stamp_insight_build):
 	$(MAKE) $(makejobs) -C build-$(insight_name) $(to_log)
 	touch $@
 
-install_insight: log = $(logdir)/$(insight_name).log
+install_insight: log = $(logdir)/build-$(insight_name).log
 install_insight: logdir
 install_insight: build_insight $(stamp_insight_install)
 
