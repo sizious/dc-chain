@@ -20,8 +20,8 @@ $(build_binutils): logdir
         --prefix=$(prefix) \
         --disable-werror \
         $(libbfd_install_flag) \
-        CC=$(CC) \
-        CXX=$(CXX) \
+        CC="$(CC)" \
+        CXX="$(CXX)" \
         $(static_flag) \
         $(to_log)
 	$(MAKE) $(makejobs) -C $(build) DESTDIR=$(DESTDIR) $(to_log)

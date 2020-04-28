@@ -41,12 +41,12 @@ $(stamp_insight_build):
 	rm -rf build-$(insight_name)
 	mkdir build-$(insight_name)
 	cd build-$(insight_name); \
-      ../$(insight_name)/configure \
-        --disable-werror \
-        --prefix=$(sh_prefix) \
-        --target=$(sh_target) \
-        $(static_flag) \
-        $(to_log)
+        ../$(insight_name)/configure \
+          --disable-werror \
+          --prefix=$(sh_prefix) \
+          --target=$(sh_target) \
+          $(static_flag) \
+          $(to_log)
 	$(MAKE) $(makejobs) -C build-$(insight_name) $(to_log)
 	touch $@
 

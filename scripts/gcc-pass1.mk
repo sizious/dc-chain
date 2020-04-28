@@ -24,8 +24,8 @@ $(build_gcc_pass1): logdir
 	      --enable-checking=release \
 	      $(extra_configure_args) \
 	      $(macos_gcc_configure_args) \
-	      CC=$(CC) \
-	      CXX=$(CXX) \
+	      CC="$(CC)" \
+	      CXX="$(CXX)" \
 	      $(static_flag) \
 	      $(to_log)
 	$(MAKE) $(makejobs) -C $(build) DESTDIR=$(DESTDIR) $(to_log)

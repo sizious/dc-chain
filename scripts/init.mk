@@ -5,14 +5,16 @@
 # Initially adapted from Stalin's build script version 0.3.
 #
 
-# Catch-all: CXX
-ifeq ($(CXX),)
-  CXX := "g++"
+# Catch-all: CC
+GCC = gcc
+ifeq ($(CC),)
+  CC := $(GCC)
 endif
 
-# Catch-all: CC
-ifeq ($(CC),)
-  CC := "gcc"
+# Catch-all: CXX
+GXX = g++
+ifeq ($(CXX),)
+  CXX := $(GXX)
 endif
 
 # MinGW/MSYS
@@ -64,6 +66,8 @@ kos_base = $(CURDIR)/../..
 
 # SH toolchain
 sh_target = sh-elf
+SH_CC_FOR_TARGET = $(sh_target)-$(GCC)
+SH_CXX_FOR_TARGET = $(sh_target)-$(GXX)
 
 # ARM toolchain
 arm_target = arm-eabi
@@ -74,23 +78,22 @@ ifdef MACOS
     # Starting from macOS Mojave (10.14+)
     sdkroot = $(shell xcrun --sdk macosx --show-sdk-path)
     macos_extra_args = -isysroot $(sdkroot)
-    CC := "$(CC) -Wno-nullability-completeness"
-    CXX := "$(CXX) -stdlib=libc++ -mmacosx-version-min=10.7"
-    SH_CC_FOR_TARGET := "$(sh_target)-gcc $(macos_extra_args)"
-    SH_CXX_FOR_TARGET := "$(sh_target)-g++ $(macos_extra_args)"
+    CC += -Wno-nullability-completeness -Wno-missing-braces $(macos_extra_args)
+    CXX += -stdlib=libc++ -mmacosx-version-min=10.7 $(macos_extra_args)
+    SH_CC_FOR_TARGET += $(macos_extra_args)
+    SH_CXX_FOR_TARGET += $(macos_extra_args)
     macos_gcc_configure_args = --with-sysroot --with-native-system-header=/usr/include
   else
     # Up to macOS High Sierra (10.13)
-    CC := "$(CC)"
 
     # GCC compiles fine with clang only if we use libstdc++ instead of libc++.
-    CXX := "$(CXX) -stdlib=libstdc++"
+    CXX += -stdlib=libstdc++
   endif
 endif
 
 # Handle Cygwin
 ifdef CYGWIN
-  CC := "$(CC) -D_GNU_SOURCE"
+  CC += -D_GNU_SOURCE
 endif
 
 # Set static flags to pass to configure if needed
