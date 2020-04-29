@@ -15,11 +15,7 @@ stamp_insight_install = insight_install.stamp
 
 $(insight_file):
 	@echo "+++ Downloading Insight..."
-ifndef USE_CURL
-	wget -c $(insight_url)
-else
-	curl -O -J $(insight_url)
-endif
+	$(web_downloader) $(insight_url)
 
 unpack_insight: $(insight_file) $(stamp_insight_unpack)
 

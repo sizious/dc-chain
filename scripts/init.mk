@@ -17,6 +17,12 @@ ifeq ($(CXX),)
   CXX := $(GXX)
 endif
 
+# Detect where Bash is installed
+SHELL = /bin/bash
+ifdef FREEBSD
+  SHELL = /usr/local/bin/bash
+endif
+
 # MinGW/MSYS
 # Check the MSYS POSIX emulation layer version...
 #
@@ -42,27 +48,9 @@ ifdef MINGW
   msys_patched_checksum = 2e627b60938fb8894b3536fc8fe0587a5477f570
   msys_checksum = $(shell sha1sum /bin/msys-1.0.dll | cut -c-40)
   ifneq ($(msys_checksum),$(msys_patched_checksum))	
-    $(warning Please consider temporarily patching '/bin/msys-1.0.dll'!)
+    $(warning Please consider temporarily patching '/bin/msys-1.0.dll')
   endif
 endif
-
-# Detect where Bash is installed
-SHELL = /bin/bash
-ifdef FREEBSD
-  SHELL = /usr/local/bin/bash
-endif
-
-# Check if we are curl or wget...
-web_downloader := $(shell command -v wget)
-ifeq ($(web_downloader),)
-  USE_CURL = 1
-endif
-
-# KOS Git root directory (contains kos/ and kos-ports/)
-kos_root = $(CURDIR)/../../..
-
-# kos_base is equivalent of KOS_BASE (contains include/ and kernel/)
-kos_base = $(CURDIR)/../..
 
 # SH toolchain
 sh_target = sh-elf
@@ -71,7 +59,6 @@ SH_CXX_FOR_TARGET = $(sh_target)-$(GXX)
 
 # ARM toolchain
 arm_target = arm-eabi
-
 
 # Handle macOS
 ifdef MACOS
@@ -97,7 +84,7 @@ endif
 # Set static flags to pass to configure if needed
 ifeq ($(standalone_binary),1)
   ifndef MINGW
-    $(warning 'standalone_binary' should be used ONLY on MinGW/MSYS environment)
+    $(warning 'standalone_binary' should be used *ONLY* on MinGW/MSYS environment)
   endif
   # Note the extra minus before -static
   # See: https://stackoverflow.com/a/29055118/3726096
@@ -114,7 +101,11 @@ endif
 # the build
 ifdef MINGW
   ifneq ($(makejobs),)
-    $(warning Multiple make jobs isn't supported in this environment)
+    $(warning 'makejobs' is unsupported in this environment --ignoring)
     makejobs=
   endif
 endif
+
+# Web downloaders command-lines
+wget_cmd=wget -c
+curl_cmd=curl -C - -O -J

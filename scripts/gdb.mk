@@ -19,11 +19,7 @@ gdb_patches += $(wildcard $(patches)/$(host_triplet)/$(gdb_name)*.diff)
 
 $(gdb_file):
 	@echo "+++ Downloading GDB..."
-ifndef USE_CURL
-	wget -c $(gdb_url)
-else
-	curl -O -J $(gdb_url)
-endif
+	$(web_downloader) $(gdb_url)
 
 unpack_gdb: $(gdb_file) $(stamp_gdb_unpack) $(stamp_gdb_patch)
 
