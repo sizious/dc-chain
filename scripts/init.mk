@@ -83,13 +83,7 @@ ifdef MACOS
     SH_CC_FOR_TARGET += $(macos_extra_args)
     SH_CXX_FOR_TARGET += $(macos_extra_args)
     macos_gcc_configure_args = --with-sysroot --with-native-system-header=/usr/include
-    macos_gdb_configure_args = --with-sysroot=$(sdkroot)
-  else
-    # Up to macOS High Sierra (10.13)
-
-    # GCC compiles fine with clang only if we use libstdc++ instead of libc++.
-    CXX += -stdlib=libstdc++
-  endif
+    macos_gdb_configure_args = --with-sysroot=$(sdkroot)  
 endif
 
 # Handle Cygwin
