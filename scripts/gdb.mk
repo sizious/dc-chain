@@ -61,7 +61,7 @@ $(stamp_gdb_build):
           --target=$(sh_target) \
           CC="$(CC)" \
           CXX="$(CXX)" \
-          $(macos_gdb_configure_args) \		  
+          $(macos_gdb_configure_args) \
           $(static_flag) \
           $(to_log)
 	$(MAKE) $(makejobs) -C build-$(gdb_name) $(to_log)
