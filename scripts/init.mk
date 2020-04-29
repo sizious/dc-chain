@@ -83,6 +83,7 @@ ifdef MACOS
     SH_CC_FOR_TARGET += $(macos_extra_args)
     SH_CXX_FOR_TARGET += $(macos_extra_args)
     macos_gcc_configure_args = --with-sysroot --with-native-system-header=/usr/include
+    macos_gdb_configure_args = --with-sysroot=$(sdkroot)
   else
     # Up to macOS High Sierra (10.13)
 
@@ -99,7 +100,7 @@ endif
 # Set static flags to pass to configure if needed
 ifeq ($(standalone_binary),1)
   ifndef MINGW
-    $(warning standalone_binary should be used ONLY on MinGW/MSYS environment)
+    $(warning 'standalone_binary' should be used ONLY on MinGW/MSYS environment)
   endif
   # Note the extra minus before -static
   # See: https://stackoverflow.com/a/29055118/3726096

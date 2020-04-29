@@ -59,12 +59,9 @@ $(stamp_gdb_build):
           --disable-werror \
           --prefix=$(sh_prefix) \
           --target=$(sh_target) \
-          --with-sysroot=$(sdkroot) \
-          --with-build-sysroot=$(sdkroot) \
           CC="$(CC)" \
           CXX="$(CXX)" \
-          CC_FOR_TARGET="$(SH_CC_FOR_TARGET)" \
-          CXX_FOR_TARGET="$(SH_CXX_FOR_TARGET)" \
+          $(macos_gdb_configure_args) \		  
           $(static_flag) \
           $(to_log)
 	$(MAKE) $(makejobs) -C build-$(gdb_name) $(to_log)
