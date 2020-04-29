@@ -72,6 +72,7 @@ SH_CXX_FOR_TARGET = $(sh_target)-$(GXX)
 # ARM toolchain
 arm_target = arm-eabi
 
+
 # Handle macOS
 ifdef MACOS
   ifdef MACOS_MOJAVE_AND_UP
@@ -84,6 +85,7 @@ ifdef MACOS
     SH_CXX_FOR_TARGET += $(macos_extra_args)
     macos_gcc_configure_args = --with-sysroot --with-native-system-header=/usr/include
     macos_gdb_configure_args = --with-sysroot=$(sdkroot)  
+  endif
 endif
 
 # Handle Cygwin
