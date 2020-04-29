@@ -109,12 +109,12 @@ ifdef WINDOWS
   executable_extension=.exe
 endif
 
-# Handle makejobs exceptions
+# MinGW/MSYS
+# Disable makejobs possibility in legacy MinGW/MSYS environment as this breaks
+# the build
 ifdef MINGW
-  makejobs=
+  ifneq ($(makejobs),)
+    $(warning Multiple make jobs isn't supported in this environment)
+    makejobs=
+  endif
 endif
-
-ifdef WSL
-  makejobs=-j2
-endif
-
