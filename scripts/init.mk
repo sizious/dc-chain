@@ -95,6 +95,7 @@ endif
 # Handle Cygwin
 ifdef CYGWIN
   CC += -D_GNU_SOURCE
+  CXX += -D_GNU_SOURCE
 endif
 
 # Set static flags to pass to configure if needed
