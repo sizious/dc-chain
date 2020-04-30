@@ -3,6 +3,8 @@
 # Getting configuration from Makefile
 source ./scripts/common.sh
 
+print_banner "Unpacker"
+
 function unpack()
 {
   local name="$1"
@@ -84,14 +86,12 @@ rm -rf binutils-$SH_BINUTILS_VER binutils-$ARM_BINUTILS_VER \
        newlib-$NEWLIB_VER
 
 # Unpack SH components
-
 unpack "Binutils" $SH_BINUTILS_VER $SH_BINUTILS_TARBALL_TYPE
 unpack "GCC" $SH_GCC_VER $SH_GCC_TARBALL_TYPE
 unpack_dependencies "sh"
 unpack "Newlib" $NEWLIB_VER $NEWLIB_TARBALL_TYPE
 
 # Unpack ARM components
- 
 unpack "Binutils" $ARM_BINUTILS_VER $ARM_BINUTILS_TARBALL_TYPE
 unpack "GCC" $ARM_GCC_VER $ARM_GCC_TARBALL_TYPE
 unpack_dependencies "arm"

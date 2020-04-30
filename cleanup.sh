@@ -3,6 +3,8 @@
 # Getting configuration from Makefile
 source ./scripts/common.sh
 
+print_banner "Cleaner"
+
 while [ "$1" != "" ]; do
     PARAM=`echo $1 | awk -F= '{print $1}'`
     case $PARAM in

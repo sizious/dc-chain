@@ -27,6 +27,13 @@ function tolower()
   echo "$1" | awk '{print tolower($0)}'
 }
 
+function print_banner()
+{
+  local var="$1"
+  local banner_text=`get_make_var banner_text scripts/banner-variables.mk`
+  printf "*** ${var} Utility for ${banner_text} ***\n\n" 
+}
+
 export CONFIG_GUESS="config.guess"
 
 export SH_BINUTILS_VER=`get_make_var sh_binutils_ver`

@@ -3,6 +3,8 @@
 # Getting configuration from Makefile
 source ./scripts/common.sh
 
+print_banner "Downloader"
+
 while [ "$1" != "" ]; do
     PARAM=`echo $1 | awk -F= '{print $1}'`
     case $PARAM in
@@ -68,15 +70,13 @@ function download_dependencies()
 
 # Download everything.
 if [ -z "${CONFIG_GUESS_ONLY}" ]; then
-  echo "*** Downloading SH components";
-
+  # Downloading SH components
   download "Binutils" "$SH_BINUTILS_VER" "ftp.gnu.org/gnu/binutils/binutils-$SH_BINUTILS_VER.tar.$SH_BINUTILS_TARBALL_TYPE"
   download "GCC" "$SH_GCC_VER" "ftp.gnu.org/gnu/gcc/gcc-$SH_GCC_VER/gcc-$SH_GCC_VER.tar.$SH_GCC_TARBALL_TYPE"
   download_dependencies "sh"
   download "Newlib" "$NEWLIB_VER" "sourceware.org/pub/newlib/newlib-$NEWLIB_VER.tar.$NEWLIB_TARBALL_TYPE"
 
-  echo "*** Downloading ARM components...";
-
+  # Downloading ARM components
   download "Binutils" $ARM_BINUTILS_VER"" "ftp.gnu.org/gnu/binutils/binutils-$ARM_BINUTILS_VER.tar.$ARM_BINUTILS_TARBALL_TYPE"
   download "GCC" "$ARM_GCC_VER" "ftp.gnu.org/gnu/gcc/gcc-$ARM_GCC_VER/gcc-$ARM_GCC_VER.tar.$ARM_GCC_TARBALL_TYPE"
   download_dependencies "arm"

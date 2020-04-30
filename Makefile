@@ -8,6 +8,7 @@
 #
 
 # Display startup banner
+include scripts/banner-variables.mk
 include scripts/banner.mk
 
 # User configuration

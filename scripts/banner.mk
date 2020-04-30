@@ -5,7 +5,7 @@
 # Initially adapted from Stalin's build script version 0.3.
 #
 
-$(info ########################################################)
-$(info Sega Dreamcast Toolchain Maker (dc-chain) for KallistiOS)
-$(info ########################################################)
+$(info $(banner_line))
+$(info $(banner_text))
+$(info $(banner_line))
 $(info )
