@@ -54,13 +54,6 @@ ifneq ($(shell echo "$(host_triplet)" | grep -i 'freebsd'),)
   BSD := 1
 endif
 
-# Determine if we are on WSL
-ifneq ($(shell echo "$(uname_r)" | grep -i 'microsoft'),)
-  $(info WSL build environment detected)
-  WSL := 1
-  WINDOWS := 1
-endif
-
 # Determine if we are running Cygwin
 ifneq ($(shell echo "$(host_triplet)" | grep -i 'cygwin'),)
   $(info Cygwin build environment detected)
@@ -83,4 +76,10 @@ ifneq ($(shell echo "$(host_triplet)" | grep -i 'mingw'),)
   endif
   MINGW32 := 1  
   WINDOWS := 1  
+endif
+
+# Determine if we are on WSL
+ifneq ($(shell echo "$(uname_r)" | grep -i 'microsoft'),)
+  $(info Windows Subsystem for Linux environment detected)
+  WSL := 1
 endif
