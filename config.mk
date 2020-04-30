@@ -4,6 +4,7 @@
 # Created by Jim Ursetto (2004)
 # Initially adapted from Stalin's build script version 0.3.
 #
+
 # Interesting targets (you can 'make' any of these):
 # all: patch build
 # patch: patch-gcc patch-newlib patch-kos
@@ -40,18 +41,18 @@ arm_gcc_ver=8.4.0
 arm_binutils_tarball_type=xz
 arm_gcc_tarball_type=xz
 
-# GCC Custom Dependencies
-# Specify here if you want to use custom GMP, MPFR, MPC and ISL libraries when
-# building GCC as they are required. If you leave this parameter commented,
-# all these dependencies will be automatically downloaded by using the provided 
-# '/contrib/download_prerequisites' shell script from GCC packages, which is
-# recommended. The ISL dependency isn't mandatory but recommended. If you don't
-# want it, you may just comment the version numbers (i.e. 'sh_isl_ver' and
-# 'arm_isl_ver') to disable the ISL library.
+# GCC custom dependencies
+# Specify here if you want to use custom GMP, MPFR and MPC libraries as they are
+# required when building GCC. If you leave this variable commented, all 
+# these dependencies will be automatically downloaded by using the provided 
+# '/contrib/download_prerequisites' shell script from the GCC packages, which is
+# recommended. The ISL dependency isn't mandatory; if you don't want it, you may 
+# just comment the version numbers (i.e. 'sh_isl_ver' and 'arm_isl_ver') to
+# disable the ISL library.
 #use_custom_dependencies=1
 
 # Internal custom GCC libraries (i.e. GMP, MPFR, MPC and ISL) versions to use
-# only if 'use_custom_dependencies' flag is set to '1'.
+# only if the 'use_custom_dependencies' flag is set to '1'.
 
 # GCC dependencies for SH
 sh_gmp_ver=6.1.0
@@ -77,7 +78,7 @@ arm_mpfr_tarball_type=bz2
 arm_mpc_tarball_type=gz
 arm_isl_tarball_type=bz2
 
-# GCC threading model (single|kos)
+# GCC threading model (single|kos|posix*)
 # With GCC 4.x versions and up, the patches provide a 'kos' thread model, so you 
 # should use it. If you really don't want threading support for C++ (or 
 # Objective C/Objective C++), you can set this to 'single'. With GCC 3.x, you 
@@ -87,8 +88,8 @@ thread_model=kos
 
 # Install mode (install-strip|install)
 # Use 'install-strip' mode for removing debugging symbols of the toolchains.
-# Use 'install' to enable debug symbols for the toolchains. This may be
-# useful only if you plan to debug the toolchain itself!
+# Use 'install' only if you want to enable debug symbols for the toolchains.
+# This may be useful only if you plan to debug the toolchain itself.
 install_mode=install-strip
 
 # Toolchains base

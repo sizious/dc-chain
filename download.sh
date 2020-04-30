@@ -35,11 +35,13 @@ function download()
   local url=$3
   local filename=$(basename $url)
 
-  if [ ! -f $filename ] && [ -n "$ver" ]; then
-    echo "Downloading ${name} ${ver}..."
-    ${WEB_DOWNLOADER} "${DOWNLOAD_PROTOCOL}${url}" || exit 1
-  else
-    echo "$name $ver was already downloaded"
+  if [ -n "$ver" ]; then
+    if [ ! -f $filename ]; then
+      echo "Downloading ${name} ${ver}..."
+      ${WEB_DOWNLOADER} "${DOWNLOAD_PROTOCOL}${url}" || exit 1
+    else
+      echo "$name $ver was already downloaded"
+	fi
   fi
 }
 
