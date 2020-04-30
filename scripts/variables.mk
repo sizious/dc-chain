@@ -5,17 +5,28 @@
 # Initially adapted from Stalin's build script version 0.3.
 #
 
-# Check if we are cURL or Wget...
-web_downloader_tester_curl := $(shell command -v curl)
-ifneq ($(web_downloader_tester_curl),)
-  web_downloader = $(curl_cmd)
+# Handle web downloader
+ifeq ($(force_downloader),)
+  # Check if we are cURL or Wget...
+  web_downloader_tester_curl := $(shell command -v curl)
+  ifneq ($(web_downloader_tester_curl),)
+    web_downloader = $(curl_cmd)
+  else
+    web_downloader_tester_wget := $(shell command -v wget)
+    ifneq ($(web_downloader_tester_wget),)
+      web_downloader = $(wget_cmd)
+    else
+      $(error You must have either Wget or cURL installed)
+    endif
+  endif
 else
-  web_downloader_tester_wget := $(shell command -v wget)
-  ifneq ($(web_downloader_tester_wget),)
+  ifeq ($(force_downloader),curl)
+    web_downloader = $(curl_cmd)
+  else ifeq ($(force_downloader),wget)
     web_downloader = $(wget_cmd)
   else
-    $(error You must have either Wget or cURL installed)
-  endif
+    $(error Only Wget or cURL are supported) 
+  endif  
 endif
 
 # KOS Git root directory (contains kos/ and kos-ports/)

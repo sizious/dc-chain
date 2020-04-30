@@ -17,17 +17,6 @@ while [ "$1" != "" ]; do
     shift
 done
 
-# Retrieve the web downloader program available in this system.
-if command -v curl > /dev/null 2>&1; then
-  WEB_DOWNLOADER=`get_make_var curl_cmd scripts/init.mk`
-  IS_CURL=1
-elif command -v wget > /dev/null 2>&1; then
-  WEB_DOWNLOADER=`get_make_var wget_cmd scripts/init.mk`
-else
-  echo >&2 "You must have either Wget or cURL installed!"
-  exit 1
-fi
-
 function download()
 {
   local name=$1

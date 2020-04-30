@@ -126,6 +126,12 @@ pass2_languages=c,c++,objc,obj-c++
 # Specify here the protocol you want to use for downloading the packages.
 download_protocol=https
 
+# Force downloader (curl|wget)
+# You may specify here 'wget' or 'curl'. If this variable is empty or commented,
+# web downloader tool will be auto-detected in the following order: cURL, Wget.
+# You must have either Wget or cURL installed to use dc-chain.
+#force_downloader=curl
+
 # MinGW/MSYS
 # Define this if you want a standalone, no dependency binary (i.e. static)
 # When the binary is standalone, it can be run outside MinGW/MSYS environment.

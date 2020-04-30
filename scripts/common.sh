@@ -67,3 +67,28 @@ export ARM_MPFR_TARBALL_TYPE=`get_make_var arm_mpfr_tarball_type`
 export ARM_MPC_TARBALL_TYPE=`get_make_var arm_mpc_tarball_type`
 export ARM_ISL_TARBALL_TYPE=`get_make_var arm_isl_tarball_type`
 
+# Retrieve the web downloader program available in this system.
+export IS_CURL=0
+export WEB_DOWNLOADER=
+curl_cmd=`get_make_var curl_cmd scripts/init.mk`
+wget_cmd=`get_make_var wget_cmd scripts/init.mk`
+force_downloader=`get_make_var force_downloader`
+if [ -z "$force_downloader" ]; then
+  if command -v curl > /dev/null 2>&1; then
+    export WEB_DOWNLOADER=${curl_cmd}
+    export IS_CURL=1
+  elif command -v wget > /dev/null 2>&1; then
+    export WEB_DOWNLOADER=${wget_cmd}
+  else
+    echo >&2 "You must have either Wget or cURL installed!" || exit 1    
+  fi
+else
+  if [ "$force_downloader" == "curl" ]; then
+    export WEB_DOWNLOADER=${curl_cmd}
+    export IS_CURL=1	
+  elif [ "$force_downloader" == "wget" ]; then
+    export WEB_DOWNLOADER=${wget_cmd}      
+  else
+    echo >&2 "Only Wget or cURL are supported!" || exit 1    
+  fi
+fi

@@ -101,7 +101,7 @@ endif
 # the build
 ifdef MINGW
   ifneq ($(makejobs),)
-    $(warning 'makejobs' is unsupported in this environment --ignoring)
+    $(warning 'makejobs' is unsupported in this environment.  Ignoring.)
     makejobs=
   endif
 endif
