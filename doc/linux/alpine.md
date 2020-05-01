@@ -1,80 +1,50 @@
-# Sega Dreamcast Toolchains Maker (`dc-chain`) with macOS #
+# Sega Dreamcast Toolchains Maker (`dc-chain`) with Alpine Linux #
 
 This document contains all the instructions to create a fully working
-toolchains targeting the **Sega Dreamcast** system under **macOS**.
+toolchains targeting the **Sega Dreamcast** system under **Alpine Linux**.
 
-This document was written when using **macOS** (`10.14 Mojave`) but it should be
-applicable on all **macOS** systems. Note that Apple introduced some breaking
-changes in `10.14 Mojave`; so starting from that version, some header files have
-moved. They have been removed in `10.15 Catalina` and later versions.
-**dc-chain** supports all modern macOS versions, including `pre-Mojave`
-releases.
+**Alpine Linux** is a regular **GNU/Linux** system but it's a great candidate
+for making **Docker** images; that's why a special document was written for
+that distribution.
 
 ## Introduction ##
 
-On **macOS** system, the package manager is the `brew` tool, which is provided
-by the [Homebrew project](https://brew.sh).
- 
-If you never used the `brew` tool before, you will need to install it. The
-procedure to do that is given below.
+On **Alpine Linux** family system, the package manager is the `apk` tool.
 
-All the operations in this document should be executed with the `root` user. To
-do that, from a **Terminal** window, input:
-
-	sudo -s
-
-If you don't want to use the `root` user, another option is to use the `sudo`
-command. In that case, you will need to add the `sudo` command before entering
-all the commands specified below.
+All the operations in this document should be executed with the `root` user. 
+You have to type the `su -` command which comes installed by default on
+**Alpine Linux**.
 
 ## Prerequisites ##
 
 Before doing anything, you will have to install some prerequisites in order to
 build the whole toolchains.
 
-### Installation of the Developer Tools ###
-
-By default, the **macOS** system doesn't contains any developer tools installed.
-The really first prerequisites is to install them.
-
-Please note, you can ignore these instructions below if you already have
-**Xcode** installed on your system.
-
-1. Open a **Terminal**.
-
-2. Then input:
-
-		xcode-select --install
-
-3. When the window opens, click on the `Install` button, then click on the
-   `Accept` button.
-
-All the developer tools should be now installed, like `gcc` or `make`. You can
-try this by entering `gcc --version` in the **Terminal**.
-
-### Installation of Homebrew ###
-
-As already said in the introduction, the **macOS** system doesn't come with a
-package manager, but fortunately, the [Homebrew project](https://brew.sh) is
-here to fill this gap:
-
-1. Open a **Terminal** window.
-
-2. Execute the following:
-
-		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-**Homebrew** is now installed. You can check if it's working by entering
-`brew --version`.
-
 ### Installation of required packages ###
 
 The packages below need to be installed:
 
-	brew install libjpeg libpng libelf
+	apk --update add build-base patch bash texinfo libjpeg-turbo-dev libpng-dev	curl wget
+	
+At this time of writing, the `libelf-dev` package was missing from the main
+repository, so you have to execute the following to install it:
 
-All the other required packages have already been installed, i.e. `git`, `svn`
-or `python`.
+	apk --update add libelf-dev --repository=http://dl-cdn.alpinelinux.org/alpine/v3.9/main
+
+This may not be necessary depending if the `apk` repository was updated. Please
+keep in mind that you have to install the `libelf-dev` package.
+
+### Installation of additional packages ###
+
+These additional packages are required too:
+
+	apk --update add git python subversion
+
+**Git** is needed right now, as **Subversion Client** and **Python 2** will be
+needed only when building `kos-ports`. But it's better to install these now.
+
+By the way you can check the installation success by entering something like
+`git --version`. This should returns something like `git version X.Y.Z`.
 
 ## Preparing the environment installation ##
 
@@ -153,3 +123,8 @@ Now it's time to compile **KallistiOS**.
 
 Please read the `/opt/toolchains/dc/kos/doc/README` file to learn the next
 steps.
+
+## About Docker images ##
+
+You may use the `docker` directory in order to have an example of working
+`Dockerfile`.

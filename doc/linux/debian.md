@@ -1,18 +1,19 @@
-# Sega Dreamcast toolchain with GNU/Linux #
+# Sega Dreamcast Toolchains Maker (`dc-chain`) with Debian #
 
 This document contains all the instructions to create a fully working
-toolchain targeting the **Sega Dreamcast** system under **GNU/Linux**.
+toolchains targeting the **Sega Dreamcast** system under **Debian**.
 
 This document was written when using **Lubuntu** (`18.04`) but it should be
-applicable on all **GNU/Linux** systems.
+applicable on all **Debian** systems; and more generally to any **GNU/Linux**
+systems.
 
 ## Introduction ##
 
-On **Ubuntu** family system, the package manager is the `apt-get` tool.
+On **Debian** family system, the package manager is the `apt-get` tool.
 
 All the operations in this document should be executed with the `root` user. If 
 you don't want to connect with the `root` user, another option is to use
-the `sudo` command which comes installed by default on **Lubuntu** and
+the `sudo` command which comes installed by default on **Debian** and
 **Ubuntu** systems family.
 
 In that case, you will need to add the `sudo` command before entering all the
@@ -21,7 +22,7 @@ commands specified below.
 ## Prerequisites ##
 
 Before doing anything, you will have to install some prerequisites in order to
-build the whole toolchain.
+build the whole toolchains.
 
 ### Update of your local installation ###
 
@@ -30,7 +31,7 @@ The first thing to do is to update your local installation:
 	apt-get update
 	apt-get upgrade -y	
 
-This should update all the packages of the **GNU/Linux** environment.
+This should update all the packages of the **Debian** environment.
 
 ### Installation of required packages ###
 
@@ -52,7 +53,7 @@ By the way you can check the installation success by entering something like
 
 ## Preparing the environment installation ##
 
-1. Enter the following to prepare **KallistiOS** and the toolchain:
+1. Enter the following to prepare **KallistiOS** and the toolchains:
 
 		mkdir -p /opt/toolchains/dc/
 		cd /opt/toolchains/dc/
@@ -67,7 +68,7 @@ By the way you can check the installation success by entering something like
 		git clone https://github.com/KallistiOS/dcload-serial.git
 		git clone https://github.com/KallistiOS/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchain.
+Everything is ready, now it's time to use the make the toolchains.
 
 ## Compilation ##
 
@@ -75,13 +76,13 @@ Everything is ready, now it's time to use the make the toolchain.
 toolchains from source codes: **dc-chain**.
 
 The **dc-chain** system is mainly composed by a `Makefile` doing all the
-necessary. Open that file with a text editor (e.g. `nano`) and locate the 
-`User configuration` section. You can tweak some parameters, but usually
-everything is ready to work out-of-the-box. For example, it isn't recommended
-to change the toolchains program versions. The highest versions confirmed to
-work with the **Sega Dreamcast** are always already set in that `Makefile`.
+necessary. Open the `config.mk` file with a text editor (e.g. `nano`). 
+You can tweak some parameters, but usually everything is ready to work
+out-of-the-box. For example, it isn't recommended to change the toolchains
+program versions. The highest versions confirmed to work with the **Dreamcast**
+are always already set in that `config.mk`.
 
-### Making the toolchain ###
+### Making the toolchains ###
 
 To make the toolchains, do the following:
 
@@ -102,7 +103,7 @@ To make the toolchains, do the following:
 		make
 
 Now it's time to take a coffee as this process is really long: several hours
-will be needed to make the full toolchain!
+will be needed to make the full toolchains!
 
 ### Making the GNU Debugger (gdb) ###
 
@@ -121,7 +122,7 @@ After everything is done, you can cleanup all temporary files by entering:
 
 ## Next steps ##
 
-After following this guide, the toolchain should be ready.
+After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 

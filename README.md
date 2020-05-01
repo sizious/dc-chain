@@ -4,7 +4,7 @@ The **Sega Dreamcast Toolchain Maker** (`dc-chain`) utility is a set of files
 made for building all the needed toolchains used in **Sega Dreamcast** 
 programming under the **KallistiOS** environment. It was first released by 
 *Jim Ursetto* back in 2004 and was initially adapted from *Stalin*'s build 
-script v0.3. This utility is part of **KallistiOS**.
+script v0.3. This utility is part of **KallistiOS** (**KOS**).
 
 By using this utility, 2 toolchains will be built for **Dreamcast** development:
 
@@ -38,10 +38,10 @@ for the main toolchain (`sh-elf`).
 ## Getting started
 
 Before you start, please browse the `./doc` directory and check if they are
-full instructions for building the whole toolchain for your environment. A big
+full instructions for building the whole toolchains for your environment. A big
 effort was put to simplify the building process as much as possible, for all
 modern environments, mainly **Linux** (including **BSD**), **macOS** and
-**Windows**.
+**Windows** (including **Cygwin**, **MinGW-w64/MSYS2** and **MinGW/MSYS**).
 
 ### `dc-chain` utility installation
 
@@ -60,23 +60,12 @@ Everything is described in the `./doc` directory.
 
 ## Configuration
 
-The recommanded settings are already set but if you want to tweak your setup,
+The recommended settings are already set but if you want to tweak your setup,
 feel free to open the `config.mk` file in your favorite editor.
 
 Please find below every parameter available in the `config.mk` file.
 
-### Toolchains Base
-
-`toolchains_base` indicates the root directory where toolchains will be
-installed. This should match your `environ.sh` configuration. Default is 
-`/opt/toolchains/dc`.
-
-In clear, after building the toolchains, you'll have two additional directories:
-
-- `/opt/toolchains/dc/arm-eabi`;
-- `/opt/toolchains/dc/sh-elf`.
-
-### Toolchains Components
+### Toolchains components
 
 All component's version of the toolchains are declared in the `config.mk` file.
 
@@ -94,35 +83,49 @@ For the `arm-eabi` toolchain, they are:
 - `arm_gcc_ver`
 
 Speaking about the best versions of the components to use for the Dreamcast
-development, they are already set in the `config.mk` file.
+development, they are already set in the `config.mk` file. This is particulary
+true for **GCC** and **Newlib** as these components are patched to compile with
+**KallistiOS**. For **Binutils** or **GDB**, you may use the latest available
+versions without problems.
 
-The most well tested combination is GCC `4.7.4` with Newlib `2.0.0` for both
-targets (`sh-elf` and `arm-eabi`) but there are also newer possibilities that
-are in testing, which are currently set; GCC `9.3.0` with Newlib `3.3.0` for
-`sh-elf` and GCC `8.4.0` for `arm-eabi`. **Note:** The GCC's maximum version
-number possible for the `arm-eabi` toolchain is `8.4.0`. Support of the
-**ARM7** chip is dropped after that GCC version.
+Tested **GCC** / **Newlib** version combinaisons are:
 
-You have the possibility to use custom dependencies for GCC directly in the
+- GCC `9.3.0` with Newlib `3.3.0` for `sh-elf` and GCC `8.4.0` for `arm-eabi`
+  (edge; in testing stage; default values in `config.mk`);
+- GCC `4.7.4` with Newlib `2.0.0` for `sh-elf` and `arm-eabi` (stable; the most
+  well tested combination, [some issues may happen in C++](https://dcemulation.org/phpBB/viewtopic.php?f=29&t=104724));
+- GCC `4.7.3` with Newlib `2.0.0` for `sh-elf` and `arm-eabi` (previous stable
+  version).
+
+**Note:** The GCC's maximum version number possible for the `arm-eabi` toolchain
+is `8.4.0`. Support of the **ARM7** chip is dropped after that GCC version.
+
+You have the possibility to **use custom dependencies for GCC** directly in the
 `config.mk` file. In that case, you have to define `use_custom_dependencies=1`.
 Doing so will use your custom versions of **GMP**, **MPC**, **MPFR** and 
-**ISL** rather than the provided versions with GCC.
+**ISL** rather than the provided versions with GCC. You may also use this flag
+if you have trouble using the `contrib/download_prerequisites` script provided
+with GCC.
 
 Please note that you have the possibility to specify the `tarball_type` 
 extensions you want to download too; this may be useful if a package
-changes its extension on the servers.
+changes its extension on the servers. For example, for GCC `4.7.4`, there is no
+`xz` tarball file, so you may change this to `gz`.
 
-### GCC threading model
+### Toolchains base
 
-With GCC 4.x versions and up, the patches provide a `kos` thread model, so you 
-should use it. If you really don't want threading support for C++, Objective C
-or Objective C++, you can set this to `single`. With GCC 3.x, you probably 
-want `posix` here; but this mode is deprecated as the GCC 3.x branch is not
-supported anymore.
+`toolchains_base` indicates the root directory where toolchains will be
+installed. This should match your `environ.sh` configuration. Default is 
+`/opt/toolchains/dc`.
+
+In clear, after building the toolchains, you'll have two additional directories:
+
+- `/opt/toolchains/dc/arm-eabi`;
+- `/opt/toolchains/dc/sh-elf`.
 
 ### Erase
 
-Set the `erase` flag to `1` to remove build directories on the fly to save 
+Set the `erase` flag to `1` to remove build directories on the fly to save
 space.
 
 ### Verbose
@@ -137,17 +140,14 @@ inside the `config.mk` to set the number of jobs for the building phases.
 Set the `makejobs` variable in the `config.mk` to whatever you would normally
 feel the need to use on the command line, and it will do the right thing.
 
-In the old times, this option may breaks things, so, if you run into
-trouble, you should clear this variable and try again with just one
-job running.
+In the old times, this option may breaks things, so, if you run into trouble,
+you should clear this variable and try again with just one job running (i.e.
+"makejobs=").
 
 On **MinGW/MSYS** environment, it has been confirmed that multiple jobs breaks
-the toolchain, so please don't try to do that under this environment. This
-option is disabled by default in this scenario. This doesn't apply to 
-**MinGW-w64/MSYS2**.
-
-Under the **WSL** environment (**Windows Subsystem for Linux**), the maximum
-is `2` jobs in parallel.
+the toolchain all the time, so please don't try to do that under this
+environment. This option is disabled by default in this scenario. This doesn't
+apply to **MinGW-w64/MSYS2**.
 
 ### Languages
 
@@ -163,26 +163,44 @@ downloading the packages.
 Set the `download_protocol` variable to `https` or `ftp` as you want.
 Default is `https`.
 
-### Install Mode
+### Force downloader
+
+You may specify here `wget` or `curl`. If this variable is empty or commented,
+the web downloader tool will be auto-detected in the following order:
+
+- cURL
+- Wget
+
+You must have either [Wget](https://www.gnu.org/software/wget/) or
+[cURL](https://curl.haxx.se/) installed to use dc-chain.
+
+### GCC threading model
+
+With GCC `4.x` versions and up, the patches provide a `kos` thread model, so you 
+should use it. If you really don't want threading support for C++, Objective C
+or Objective C++, you can set this to `single`. With GCC `3.x`, you probably 
+want `posix` here; but this mode is deprecated as the GCC `3.x` branch is not
+supported anymore.
+
+### Install mode
 
 Set this to `install` if you want to debug the toolchains themselves or keep
 this to `install_mode` if you just want to use the produced toolchains in
-**release** mode.
+**release** mode. This reduces the size of the toolchains drastically.
 
-### Standalone Binaries (MinGW/MSYS only)
+### Standalone binaries (MinGW/MSYS only)
 
 Set `standalone_binary` to `1` if you want to build static binaries, which may
 be run outside the MinGW/MSYS environment. This flag has no effect on the others
 OS.
 
 Building static binaries are useful only if you plan to use an IDE on Windows.
-This flag is here mainly for producing [DreamSDK](https://dreamsdk.org).
+This flag is also here mainly for producing [DreamSDK](https://dreamsdk.org).
 
 ## Usage
 
 After installing all the prerequisites and tweaking the configuration, it's time
 to build the toolchains.
-
 
 ### Making the toolchain
 
@@ -190,9 +208,9 @@ Below you will find some generic instructions; you may find some specific
 instructions in the `./doc` directory for your OS.
 
 1. Change the variables in the `config.mk` file to match your environment. 
-   They can be overridden at the command line as well. Please note, a lot of
-   conditional instructions have been added, so it should work most of the time
-   just out-of-the-box for your environment.
+   They can be overridden at the command line as well, **except version numbers**.
+   Please note, a lot of conditional instructions have been added, so it should
+   work most of the time just out-of-the-box for your environment.
 
 2. Then execute the following for preparing the sources:
 
@@ -229,19 +247,19 @@ This will save a lot of space by removing all unnecessary files.
 
 ## Final note
 
-Interesting targets (you can 'make' any of these):
-all: patch build
-patch: patch-gcc patch-newlib patch-kos
-build: build-sh4 build-arm
-build-sh4: build-sh4-binutils build-sh4-gcc
-build-arm: build-arm-binutils build-arm-gcc
-build-sh4-gcc: build-sh4-gcc-pass1 build-sh4-newlib build-sh4-gcc-pass2
-build-arm-gcc: build-arm-gcc-pass1
-build-sh4-newlib: build-sh4-newlib-only fixup-sh4-newlib
-gdb
-insight
-
 Please see the comments at the top of the `config.mk` file for more build
 options. For example if something goes wrong, you may restart the compilation
-of the bogus step only rather than running the whole process again (e.g. to
-rebuild only `sh-elf-gcc`, you may run `make build-sh4-gcc`).
+of the bogus step only rather than running the whole process again.
+
+Interesting targets (you can `make` any of these):
+
+- `all`: `patch` `build`
+- `patch`: `patch-gcc` `patch-newlib` `patch-kos`
+- `build`: `build-sh4` `build-arm`
+- `build-sh4`: `build-sh4-binutils` `build-sh4-gcc`
+- `build-arm`: `build-arm-binutils` `build-arm-gcc`
+- `build-sh4-gcc`: `build-sh4-gcc-pass1` `build-sh4-newlib` `build-sh4-gcc-pass2`
+- `build-arm-gcc`: `build-arm-gcc-pass1`
+- `build-sh4-newlib`: `build-sh4-newlib-only` `fixup-sh4-newlib`
+- `gdb`
+- `insight`

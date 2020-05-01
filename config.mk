@@ -78,20 +78,6 @@ arm_mpfr_tarball_type=bz2
 arm_mpc_tarball_type=gz
 arm_isl_tarball_type=bz2
 
-# GCC threading model (single|kos|posix*)
-# With GCC 4.x versions and up, the patches provide a 'kos' thread model, so you 
-# should use it. If you really don't want threading support for C++ (or 
-# Objective C/Objective C++), you can set this to 'single'. With GCC 3.x, you 
-# probably want 'posix' here; but this mode is deprecated as the GCC 3.x branch
-# is not anymore supported.
-thread_model=kos
-
-# Install mode (install-strip|install)
-# Use 'install-strip' mode for removing debugging symbols of the toolchains.
-# Use 'install' only if you want to enable debug symbols for the toolchains.
-# This may be useful only if you plan to debug the toolchain itself.
-install_mode=install-strip
-
 # Toolchains base
 # Indicate the root directory where toolchains will be installed
 # This should match your 'environ.sh' configuration
@@ -131,6 +117,20 @@ download_protocol=https
 # web downloader tool will be auto-detected in the following order: cURL, Wget.
 # You must have either Wget or cURL installed to use dc-chain.
 #force_downloader=curl
+
+# GCC threading model (single|kos|posix*)
+# With GCC 4.x versions and up, the patches provide a 'kos' thread model, so you 
+# should use it. If you really don't want threading support for C++ (or 
+# Objective C/Objective C++), you can set this to 'single'. With GCC 3.x, you 
+# probably want 'posix' here; but this mode is deprecated as the GCC 3.x branch
+# is not anymore supported.
+thread_model=kos
+
+# Install mode (install-strip|install)
+# Use 'install-strip' mode for removing debugging symbols of the toolchains.
+# Use 'install' only if you want to enable debug symbols for the toolchains.
+# This may be useful only if you plan to debug the toolchain itself.
+install_mode=install-strip
 
 # MinGW/MSYS
 # Define this if you want a standalone, no dependency binary (i.e. static)

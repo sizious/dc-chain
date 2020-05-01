@@ -1,7 +1,7 @@
-# Sega Dreamcast toolchain with Cygwin #
+# Sega Dreamcast Toolchains Maker (`dc-chain`) with Cygwin #
 
 This document contains all the instructions to create a fully working
-toolchain targeting the **Sega Dreamcast** system under **Cygwin**.
+toolchains targeting the **Sega Dreamcast** system under **Cygwin**.
 
 ## Introduction ##
 
@@ -18,7 +18,7 @@ the `x86_64` version, you should replace all `i686` keywords in the packages
 name with `x86_64`.
 
 Please note that in the past, the **Cygwin** `x86_64` had problems with the
-toolchain, so its usage is not recommended.
+toolchains, so its usage is not recommended.
 
 ## Installation of Cygwin ##
 
@@ -87,7 +87,7 @@ whole environment to build the toolchains.
 		git clone https://github.com/KallistiOS/dcload-serial.git
 		git clone https://github.com/KallistiOS/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchain.
+Everything is ready, now it's time to use the make the toolchains.
 
 ## Compilation ##
 
@@ -95,13 +95,13 @@ Everything is ready, now it's time to use the make the toolchain.
 toolchains from source codes: **dc-chain**.
 
 The **dc-chain** system is mainly composed by a `Makefile` doing all the
-necessary. Open that file with a text editor and locate the `User configuration`
-section. You can tweak some parameters, but usually everything is ready to
-work out-of-the-box. For example, it isn't recommended to change the toolchains
-program versions. The highest versions confirmed to work with the
-**Sega Dreamcast** are always already set in that `Makefile`.
+necessary. Open the `config.mk` file with a text editor (e.g. `nano`). 
+You can tweak some parameters, but usually everything is ready to work
+out-of-the-box. For example, it isn't recommended to change the toolchains
+program versions. The highest versions confirmed to work with the **Dreamcast**
+are always already set in that `config.mk`.
 
-### Making the toolchain ###
+### Making the toolchains ###
 
 To make the toolchains, do the following:
 
@@ -124,7 +124,7 @@ To make the toolchains, do the following:
 		make
 
 Now it's time to take a coffee as this process is really long: several hours
-will be needed to make the full toolchain!
+will be needed to make the full toolchains!
 
 ### Making the GNU Debugger (gdb) ###
 
@@ -143,7 +143,7 @@ After everything is done, you can cleanup all temporary files by entering:
 
 ## Next steps ##
 
-After following this guide, the toolchain should be ready.
+After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 

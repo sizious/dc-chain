@@ -1,4 +1,4 @@
-# Sega Dreamcast toolchain with MinGW #
+# Sega Dreamcast Toolchains Maker (`dc-chain`) with MinGW #
 
 Before starting, you need to open the correct `README` file, depending of
 your environment:

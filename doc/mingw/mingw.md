@@ -1,7 +1,7 @@
-# Sega Dreamcast toolchain with MinGW/MSYS #
+# Sega Dreamcast Toolchains Maker (`dc-chain`) with MinGW/MSYS #
 
 This document contains all the instructions to create a fully working
-toolchain targeting the **Sega Dreamcast** system under **MinGW/MSYS**.
+toolchains targeting the **Sega Dreamcast** system under **MinGW/MSYS**.
 
 This document applies only on the original **MinGW/MSYS** environment provided
 by [MinGW.org](http://www.mingw.org). For **MinGW-w64/MSYS2** environment, check
@@ -16,7 +16,7 @@ In this document, it will be used in graphical mode (GUI).
 ## Prerequisites ##
 
 Before doing anything, you'll have to install some prerequisites in order to
-build the whole toolchain:
+build the whole toolchains:
 
 - [Git](https://git-scm.com/)
 - [Subversion Client](https://sliksvn.com/download/)
@@ -132,13 +132,13 @@ of the `/etc/fstab` file (i.e. `${MINGW_ROOT}\msys\1.0\etc\fstab`).
 		git clone https://github.com/KallistiOS/dcload-serial.git
 		git clone https://github.com/KallistiOS/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchain.
+Everything is ready, now it's time to use the make the toolchains.
 
-## About making toolchain static binaries ##
+## About making toolchains static binaries ##
 
-By default, all the binaries of the toolchain (e.g. `sh-elf-gcc`...) are
+By default, all the binaries of the toolchains (e.g. `sh-elf-gcc`...) are
 dynamically linked, and that's the way that meant to be. The drawback is,
-if you want to use the toolchain outside the **MinGW/MSYS** environment and
+if you want to use the toolchains outside the **MinGW/MSYS** environment and
 the binaries are dynamically linked, you'll have some error messages like:
 
 	The file libintl-8.dll is missing from your computer.
@@ -147,14 +147,14 @@ This happens if you just double-click on any `sh-elf` binaries (e.g.
 `sh-elf-gcc`), even with `arm-eabi` binaries.
 
 In the **MinGW/MSYS** environment, you will have the possibility to make the
-toolchain binaries statically linked, i.e. they can be run **outside** the
+toolchains binaries statically linked, i.e. they can be run **outside** the
 **MinGW/MSYS** environment:
 
 1. Open the **dc-chain** `Makefile` with a text editor.
 
 2. Locate the `STANDALONE_BINARY` flag and set it to `1`.
 
-3. Build the toolchain as usual with `make`.
+3. Build the toolchains as usual with `make`.
 
 Now, if you just double-click on any `sh-elf` binary (e.g. `sh-elf-gcc`)
 the program should run properly.
@@ -174,13 +174,13 @@ Basically, if you just plan to use the **MinGW/MSYS** environment through the
 toolchains from source codes: **dc-chain**.
 
 The **dc-chain** system is mainly composed by a `Makefile` doing all the
-necessary. Open that file with a text editor and locate the `User configuration`
-section. You can tweak some parameters, but usually everything is ready to
-work out-of-the-box. For example, it isn't recommended to change the toolchains
-program versions. The highest versions confirmed to work with the
-**Sega Dreamcast** are always already set in that `Makefile`.
+necessary. Open the `config.mk` file with a text editor (e.g. `nano`). 
+You can tweak some parameters, but usually everything is ready to work
+out-of-the-box. For example, it isn't recommended to change the toolchains
+program versions. The highest versions confirmed to work with the **Dreamcast**
+are always already set in that `config.mk`.
 
-### Making the toolchain ###
+### Making the toolchains ###
 
 To make the toolchains, do the following:
 
@@ -202,7 +202,7 @@ To make the toolchains, do the following:
 		make
 
 Now it's time to take a coffee as this process is really long: several hours
-will be needed to make the full toolchain!
+will be needed to make the full toolchains!
 
 ### Making the GNU Debugger (gdb) ###
 
@@ -221,7 +221,7 @@ After everything is done, you can cleanup all temporary files by entering:
 
 ## Removing the MSYS heap patch ##
 
-After your toolchain is ready, please don't forget to replace the patched
+After your toolchains is ready, please don't forget to replace the patched
 `msys-1.0.dll` with its original version (i.e. the patched file `SHA-1`
 is `4f7c8eb2d061cdf4d256df624f260d0e58043072`).
 
@@ -233,7 +233,7 @@ the `exit` command!
 The `ln` command in the **MinGW/MSYS** environment is not effective, as
 symbolic links are not well managed under this environment.
 That's why you need to manually fix up **SH-4** `newlib` when updating your
-toolchain (i.e. rebuilding it) and/or updating **KallistiOS**.
+toolchains (i.e. rebuilding it) and/or updating **KallistiOS**.
 
 This is the purpose of the provided `./packages/fixup-sh4-newlib.sh` script.
 
@@ -244,7 +244,7 @@ is correctly set. Then execute it by just entering:
 
 ## Next steps ##
 
-After following this guide, the toolchain should be ready.
+After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 
