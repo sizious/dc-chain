@@ -1,4 +1,4 @@
-# Sega Dreamcast Toolchain Maker (dc-chain)
+# Sega Dreamcast Toolchains Maker (dc-chain)
 # This file is part of KallistiOS.
 #
 # Created by Jim Ursetto (2004)
@@ -133,7 +133,8 @@ thread_model=kos
 install_mode=install-strip
 
 # MinGW/MSYS
-# Define this if you want a standalone, no dependency binary (i.e. static)
-# When the binary is standalone, it can be run outside MinGW/MSYS environment.
-# This is NOT recommended. Use it if you know what you are doing.
+# Standalone binaries (1|0)
+# Define this if you want a standalone, no dependency binaries (i.e. static)
+# When the binaries are standalone, it can be run outside MinGW/MSYS
+# environment. This is NOT recommended. Use it if you know what you are doing.
 #standalone_binary=1

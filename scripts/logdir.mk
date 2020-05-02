@@ -1,4 +1,4 @@
-# Sega Dreamcast Toolchain Maker (dc-chain)
+# Sega Dreamcast Toolchains Maker (dc-chain)
 # This file is part of KallistiOS.
 #
 # Created by Jim Ursetto (2004)

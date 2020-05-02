@@ -1,6 +1,6 @@
-# Sega Dreamcast Toolchain Maker (`dc-chain`)
+# Sega Dreamcast Toolchains Maker (`dc-chain`)
 
-The **Sega Dreamcast Toolchain Maker** (`dc-chain`) utility is a set of files
+The **Sega Dreamcast Toolchains Maker** (`dc-chain`) utility is a set of files
 made for building all the needed toolchains used in **Sega Dreamcast** 
 programming under the **KallistiOS** environment. It was first released by 
 *Jim Ursetto* back in 2004 and was initially adapted from *Stalin*'s build 
