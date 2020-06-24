@@ -108,7 +108,7 @@ makejobs=-j2
 # hard drive space.
 pass2_languages=c,c++,objc,obj-c++
 
-# Download protocol (https|ftp)
+# Download protocol (http|ftp)
 # Specify here the protocol you want to use for downloading the packages.
 download_protocol=http
 
