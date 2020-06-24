@@ -110,13 +110,13 @@ pass2_languages=c,c++,objc,obj-c++
 
 # Download protocol (https|ftp)
 # Specify here the protocol you want to use for downloading the packages.
-download_protocol=https
+download_protocol=http
 
 # Force downloader (curl|wget)
 # You may specify here 'wget' or 'curl'. If this variable is empty or commented,
 # web downloader tool will be auto-detected in the following order: cURL, Wget.
 # You must have either Wget or cURL installed to use dc-chain.
-#force_downloader=wget
+force_downloader=wget
 
 # GCC threading model (single|kos|posix*)
 # With GCC 4.x versions and up, the patches provide a 'kos' thread model, so you 
