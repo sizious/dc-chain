@@ -84,12 +84,12 @@ export ARM_ISL_TARBALL_TYPE=`get_make_var arm_isl_tarball_type`
 
 export SH_GMP_URL=`get_make_var sh_gmp_url`
 export SH_MPFR_URL=`get_make_var sh_mpfr_url`
-export SH_MPC_URL=`get_mpc_var sh_mpc_url`
-export SH_ISL_URL=`get_isl_var sh_isl_url`
+export SH_MPC_URL=`get_make_var sh_mpc_url`
+export SH_ISL_URL=`get_make_var sh_isl_url`
 export ARM_GMP_URL=`get_make_var arm_gmp_url`
 export ARM_MPFR_URL=`get_make_var arm_mpfr_url`
-export ARM_MPC_URL=`get_mpc_var arm_mpc_url`
-export ARM_ISL_URL=`get_isl_var arm_isl_url`
+export ARM_MPC_URL=`get_make_var arm_mpc_url`
+export ARM_ISL_URL=`get_make_var arm_isl_url`
 
 # Retrieve the web downloader program available in this system.
 export IS_CURL=0
