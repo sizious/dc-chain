@@ -52,6 +52,14 @@ export INSIGHT_TARBALL_TYPE=`get_make_var insight_tarball_type`
 export ARM_BINUTILS_TARBALL_TYPE=`get_make_var arm_binutils_tarball_type`
 export ARM_GCC_TARBALL_TYPE=`get_make_var arm_gcc_tarball_type`
 
+export SH_BINUTILS_URL=`get_make_var sh_binutils_url`
+export SH_GCC_URL=`get_make_var sh_gcc_url`
+export NEWLIB_URL=`get_make_var newlib_url`
+export GDB_URL=`get_make_var gdb_url`
+export INSIGHT_URL=`get_make_var insight_url`
+export ARM_BINUTILS_URL=`get_make_var arm_binutils_url`
+export ARM_GCC_URL=`get_make_var arm_gcc_url`
+
 export DOWNLOAD_PROTOCOL="`get_make_var download_protocol`://"
 
 export USE_CUSTOM_DEPENDENCIES=`get_make_var use_custom_dependencies`
@@ -73,6 +81,15 @@ export ARM_GMP_TARBALL_TYPE=`get_make_var arm_gmp_tarball_type`
 export ARM_MPFR_TARBALL_TYPE=`get_make_var arm_mpfr_tarball_type`
 export ARM_MPC_TARBALL_TYPE=`get_make_var arm_mpc_tarball_type`
 export ARM_ISL_TARBALL_TYPE=`get_make_var arm_isl_tarball_type`
+
+export SH_GMP_URL=`get_make_var sh_gmp_url`
+export SH_MPFR_URL=`get_make_var sh_mpfr_url`
+export SH_MPC_URL=`get_mpc_var sh_mpc_url`
+export SH_ISL_URL=`get_isl_var sh_isl_url`
+export ARM_GMP_URL=`get_make_var arm_gmp_url`
+export ARM_MPFR_URL=`get_make_var arm_mpfr_url`
+export ARM_MPC_URL=`get_mpc_var arm_mpc_url`
+export ARM_ISL_URL=`get_isl_var arm_isl_url`
 
 # Retrieve the web downloader program available in this system.
 export IS_CURL=0

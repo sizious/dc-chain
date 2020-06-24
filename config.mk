@@ -26,10 +26,15 @@ insight_ver=6.8-1
 
 # Tarball extensions to download for SH
 sh_binutils_tarball_type=xz
+sh_bintuils_url=https://ftp.gnu.org/gnu/binutils/binutils-${binutils_ver}.tar.${sh_binutils_tarball_type}
 sh_gcc_tarball_type=xz
+sh_gcc_url=https://ftp.gnu.org/gnu/gcc/gcc-${sh_gcc_ver}/gcc-${sh_gcc_ver}.tar.${sh_gcc_tarball_type}
 newlib_tarball_type=gz
+newlib_url=https://sourceware.org/pub/newlib/newlib-${newlib_ver}.tar.${newlib_tarball_type}
 gdb_tarball_type=xz
+gdb_url=ftp://ftp.gnu.org/gnu/gdb/gdb-${gdb_ver}.tar.${gdb_tarball_type}
 insight_tarball_type=bz2
+insight_url=http://mirrors.kernel.org/sourceware/insight/releases/insight-${insight_ver}a.tar.${insight_tarball_type}
 
 # Toolchain for ARM
 # The ARM version of binutils/gcc is separated out as the particular CPU
@@ -39,7 +44,9 @@ arm_gcc_ver=8.4.0
 
 # Tarball extensions to download for ARM
 arm_binutils_tarball_type=xz
+arm_bintuils_url=https://ftp.gnu.org/gnu/binutils/binutils-${binutils_ver}.tar.${arm_binutils_tarball_type}
 arm_gcc_tarball_type=xz
+arm_gcc_url=https://ftp.gnu.org/gnu/gcc/gcc-${arm_gcc_ver}/gcc-${arm_gcc_ver}.tar.${arm_gcc_tarball_type}
 
 # GCC custom dependencies
 # Specify here if you want to use custom GMP, MPFR and MPC libraries as they are
@@ -66,6 +73,11 @@ sh_mpfr_tarball_type=bz2
 sh_mpc_tarball_type=gz
 sh_isl_tarball_type=bz2
 
+sh_gmp_url=https://gmplib.org/download/gmp/gmp-${gmp_ver}.tar.${sh_gmp_tarball_type}
+sh_mpfr_url=https://www.mpfr.org/mpfr-current/mpfr-${mpfr_ver}.tar.${sh_mpfr_tarball_type}
+sh_mpc_url=https://ftp.gnu.org/gnu/mpc/mpc-${mpc_ver}.tar.${sh_mpc_tarball_type}
+sh_isl_url=http://isl.gforge.inria.fr/isl-${isl_ver}.tar.${sh_isl_tarball_type}
+
 # GCC dependencies for ARM
 arm_gmp_ver=6.2.0
 arm_mpfr_ver=4.0.2
@@ -77,6 +89,11 @@ arm_gmp_tarball_type=bz2
 arm_mpfr_tarball_type=bz2
 arm_mpc_tarball_type=gz
 arm_isl_tarball_type=bz2
+
+arm_gmp_url=https://gmplib.org/download/gmp/gmp-${gmp_ver}.tar.${arm_gmp_tarball_type}
+arm_mpfr_url=https://www.mpfr.org/mpfr-current/mpfr-${mpfr_ver}.tar.${arm_mpfr_tarball_type}
+arm_mpc_url=https://ftp.gnu.org/gnu/mpc/mpc-${mpc_ver}.tar.${arm_mpc_tarball_type}
+arm_isl_url=http://isl.gforge.inria.fr/isl-${isl_ver}.tar.${arm_isl_tarball_type}
 
 # Toolchains base
 # Indicate the root directory where toolchains will be installed
