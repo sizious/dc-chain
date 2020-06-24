@@ -49,7 +49,7 @@ arm_gcc_tarball_type=xz
 # recommended. The ISL dependency isn't mandatory; if you don't want it, you may 
 # just comment the version numbers (i.e. 'sh_isl_ver' and 'arm_isl_ver') to
 # disable the ISL library.
-#use_custom_dependencies=1
+use_custom_dependencies=1
 
 # Internal custom GCC libraries (i.e. GMP, MPFR, MPC and ISL) versions to use
 # only if the 'use_custom_dependencies' flag is set to '1'.
