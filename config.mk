@@ -19,9 +19,9 @@
 
 # Toolchain versions for SH
 sh_binutils_ver=2.34
-sh_gcc_ver=9.3.0
+sh_gcc_ver=10.1.0
 newlib_ver=3.3.0
-gdb_ver=9.1
+gdb_ver=9.2
 insight_ver=6.8-1
 
 # Tarball extensions to download for SH
@@ -55,10 +55,10 @@ arm_gcc_tarball_type=xz
 # only if the 'use_custom_dependencies' flag is set to '1'.
 
 # GCC dependencies for SH
-sh_gmp_ver=6.1.0
-sh_mpfr_ver=3.1.4
-sh_mpc_ver=1.0.3
-sh_isl_ver=0.18
+sh_gmp_ver=6.2.0
+sh_mpfr_ver=4.0.2
+sh_mpc_ver=1.1.0
+sh_isl_ver=0.22.1
 
 # Tarball extensions to download for GCC dependencies for SH
 sh_gmp_tarball_type=bz2
@@ -67,10 +67,10 @@ sh_mpc_tarball_type=gz
 sh_isl_tarball_type=bz2
 
 # GCC dependencies for ARM
-arm_gmp_ver=6.1.0
-arm_mpfr_ver=3.1.4
-arm_mpc_ver=1.0.3
-arm_isl_ver=0.18
+arm_gmp_ver=6.2.0
+arm_mpfr_ver=4.0.2
+arm_mpc_ver=1.1.0
+arm_isl_ver=0.22.1
 
 # Tarball extensions to download for GCC dependencies for ARM
 arm_gmp_tarball_type=bz2
@@ -130,7 +130,7 @@ thread_model=kos
 # Use 'install-strip' mode for removing debugging symbols of the toolchains.
 # Use 'install' only if you want to enable debug symbols for the toolchains.
 # This may be useful only if you plan to debug the toolchain itself.
-install_mode=install-strip
+install_mode=install
 
 # MinGW/MSYS
 # Standalone binaries (1|0)
