@@ -5,13 +5,28 @@
 # Initially adapted from Stalin's build script version 0.3.
 #
 
-build: build-sh4 build-arm
+build: build-sh4 build-arm build-done
 build-sh4: build-sh4-binutils build-sh4-gcc
 build-arm: build-arm-binutils build-arm-gcc
 build-sh4-gcc: build-sh4-gcc-pass1 build-sh4-newlib build-sh4-gcc-pass2
 build-arm-gcc: build-arm-gcc-pass1
 	$(clean_arm_hack)
 build-sh4-newlib: build-sh4-newlib-only fixup-sh4-newlib
+
+fixup_sh4_newlib_stamp = fixup-sh4-newlib.stamp
+build-done:
+	@if test -f "$(fixup_sh4_newlib_stamp)"; then \
+		echo ""; \
+		echo ""; \
+		echo "                              *** W A R N I N G ***"; \
+		echo ""; \
+		echo "    Be careful when upgrading KallistiOS or your toolchain!"; \
+		echo "    You need to fixup-sh4-newlib again as the 'ln' utility is not working"; \
+		echo "    properly on MinGW/MSYS and MinGW-w64/MSYS2 environments!"; \
+		echo ""; \
+		echo "    See ./doc/mingw/ for details."; \
+		echo ""; \
+	fi;
 
 # Ensure that, no matter where we enter, prefix and target are set correctly.
 build_sh4_targets = build-sh4-binutils build-sh4-gcc build-sh4-gcc-pass1 \
