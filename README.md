@@ -160,7 +160,7 @@ You may remove the latter two if you don't want them.
 You may have the possibility to change the download protocol used when
 downloading the packages.
 
-Set the `download_protocol` variable to `https` or `ftp` as you want.
+Set the `download_protocol` variable to `http`, `https` or `ftp` as you want.
 Default is `https`.
 
 ### Force downloader
@@ -196,6 +196,14 @@ OS.
 
 Building static binaries are useful only if you plan to use an IDE on Windows.
 This flag is also here mainly for producing [DreamSDK](https://dreamsdk.org).
+
+### Automatic fixup SH-4 Newlib
+
+Set `auto_fixup_sh4_newlib` to `0` if you want to disable the automatic fixup
+SH-4 Newlib needed by KallistiOS. This will keep the generated toolchain
+completely raw.
+
+This flag is here mainly for producing [DreamSDK](https://dreamsdk.org).
 
 ## Usage
 

@@ -22,12 +22,28 @@ $(build_newlib): logdir
 	$(MAKE) $(makejobs) -C $(build) DESTDIR=$(DESTDIR) $(to_log)
 	$(MAKE) -C $(build) install DESTDIR=$(DESTDIR) $(to_log)
 	$(clean_up)
-	
+
 fixup-sh4-newlib: newlib_inc = $(DESTDIR)$(sh_prefix)/$(sh_target)/include
-fixup-sh4-newlib: $(build_newlib)
+fixup-sh4-newlib: $(build_newlib) fixup-sh4-newlib-init
+
+# Determine if we want to apply fixup sh4 newlib
+do_auto_fixup_sh4_newlib := 1
+ifdef auto_fixup_sh4_newlib
+  ifeq (0,$(auto_fixup_sh4_newlib))
+    do_auto_fixup_sh4_newlib := 0
+  endif
+endif
+ifeq (1,$(do_auto_fixup_sh4_newlib))
+  fixup-sh4-newlib: fixup-sh4-newlib-apply
+endif
+
+# Prepare the fixup (always applied)
+fixup-sh4-newlib-init:
 	@echo "+++ Fixing up sh4 newlib includes..."
 	-mkdir -p $(newlib_inc)
 	-mkdir -p $(newlib_inc)/sys
+
+fixup-sh4-newlib-apply:
 # KOS pthread.h is modified
 # to define _POSIX_THREADS
 # pthreads to kthreads mapping

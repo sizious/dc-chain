@@ -108,7 +108,7 @@ makejobs=-j2
 # hard drive space.
 pass2_languages=c,c++,objc,obj-c++
 
-# Download protocol (https|ftp)
+# Download protocol (http|https|ftp)
 # Specify here the protocol you want to use for downloading the packages.
 download_protocol=https
 
@@ -138,3 +138,9 @@ install_mode=install-strip
 # When the binaries are standalone, it can be run outside MinGW/MSYS
 # environment. This is NOT recommended. Use it if you know what you are doing.
 #standalone_binary=1
+
+# Automatic fixup SH-4 Newlib (1|0)
+# Uncomment this if you want to disable the automatic fixup sh4 newlib needed by
+# KallistiOS. This will keep the generated toolchain completely raw. Don't mess
+# with that flag unless you know exactly what you are doing.
+#auto_fixup_sh4_newlib=0
