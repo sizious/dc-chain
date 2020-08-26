@@ -26,13 +26,7 @@ $(build_newlib): logdir
 fixup-sh4-newlib: newlib_inc = $(DESTDIR)$(sh_prefix)/$(sh_target)/include
 fixup-sh4-newlib: $(build_newlib) fixup-sh4-newlib-init
 
-# Determine if we want to apply fixup sh4 newlib
-do_auto_fixup_sh4_newlib := 1
-ifdef auto_fixup_sh4_newlib
-  ifeq (0,$(auto_fixup_sh4_newlib))
-    do_auto_fixup_sh4_newlib := 0
-  endif
-endif
+# Apply sh4 newlib fixups (default is yes and this should be always the case!)
 ifeq (1,$(do_auto_fixup_sh4_newlib))
   fixup-sh4-newlib: fixup-sh4-newlib-apply
 endif

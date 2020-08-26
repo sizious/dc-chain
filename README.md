@@ -197,13 +197,15 @@ OS.
 Building static binaries are useful only if you plan to use an IDE on Windows.
 This flag is also here mainly for producing [DreamSDK](https://dreamsdk.org).
 
-### Automatic fixup SH-4 Newlib
+### Automatic fixup SH-4 Newlib (experimental)
 
 Set `auto_fixup_sh4_newlib` to `0` if you want to disable the automatic fixup
 SH-4 Newlib needed by KallistiOS. This will keep the generated toolchain
 completely raw.
 
-This flag is here mainly for producing [DreamSDK](https://dreamsdk.org).
+**Note:** If you disable this flag, the KallistiOS threading model (`kos`) will
+be unavailable. Also, this may be a problem if you still apply the KallistiOS
+patches. Use this flag with care.
 
 ## Usage
 

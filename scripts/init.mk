@@ -109,3 +109,17 @@ endif
 # Web downloaders command-lines
 wget_cmd=wget -c
 curl_cmd=curl -C - -O -J
+
+# Determine if we want to apply fixup sh4 newlib
+do_auto_fixup_sh4_newlib := 1
+ifdef auto_fixup_sh4_newlib
+  ifeq (0,$(auto_fixup_sh4_newlib))
+    do_auto_fixup_sh4_newlib := 0
+  endif
+endif
+
+ifeq (0,$(do_auto_fixup_sh4_newlib))
+  ifeq (kos,$(thread_model))
+    $(error kos thread model is unsupported when Newlib fixup is disabled)
+  endif
+endif

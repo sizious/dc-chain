@@ -141,6 +141,7 @@ install_mode=install-strip
 
 # Automatic fixup SH-4 Newlib (1|0)
 # Uncomment this if you want to disable the automatic fixup sh4 newlib needed by
-# KallistiOS. This will keep the generated toolchain completely raw. Don't mess
-# with that flag unless you know exactly what you are doing.
+# KallistiOS. This will keep the generated toolchain completely raw. This will
+# also disable the 'kos' thread model. Don't mess with that flag unless you know
+# exactly what you are doing.
 #auto_fixup_sh4_newlib=0
