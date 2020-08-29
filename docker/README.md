@@ -1,13 +1,28 @@
-This repository contains the minimal toolchains used for **Sega Dreamcast**
-development. All of these images are based on [Alpine Linux](https://alpinelinux.org/).
+# Dockerfile
 
-Provided toolchains are:
-* A `sh-elf` toolchain, targetting the main CPU, which is located in `/opt/toolchains/dc/sh-elf`;
-* An `arm-eabi` toolchain, targetting the DSP (Audio), which is located in `/opt/toolchains/dc/arm-eabi` ;
-* The regular toolchain (e.g. `gcc`), used for compiling various tools.
+This directory contain a `Dockerfile` which demonstrate you how to build a
+Docker image containing the minimal toolchains used for **Sega Dreamcast**
+development.
 
-These images may be used to compile [KallistiOS](https://en.wikipedia.org/wiki/KallistiOS), the open source **Sega Dreamcast** development library.
+The Docker image foundation is based on [Alpine Linux](https://alpinelinux.org/).
 
-Source `Dockerfiles` may be found in [KallistiOS Nitro](https://gitlab.com/simulant/community/kallistios-nitro/-/tree/master/utils%2Fdc-chain%2Fdocker) repository. In the same time, these images are used for [KallistiOS Nitro](https://gitlab.com/simulant/community/kallistios-nitro) through its [GitLab CI/CD](https://gitlab.com/simulant/community/kallistios-nitro/pipelines) pipeline.
+Built toolchains are:
+* A `sh-elf` toolchain, targeting the main CPU, which will be located in 
+  `/opt/toolchains/dc/sh-elf`;
+* An `arm-eabi` toolchain, targeting the audio chip, which will be located in
+  `/opt/toolchains/dc/arm-eabi` ;
+* The regular toolchain used for compiling various tools.
 
-[Need help? Join the Discord Channel!](https://discord.gg/TRx94EV)
+These images may be used to compile [KallistiOS](https://en.wikipedia.org/wiki/KallistiOS),
+the open source **Sega Dreamcast** development library.
+
+In clear, this `Dockerfile` doesn't build KallistiOS itself, only the required
+toolchains. KallistiOS is not part of the toolchains. Plus, KallistiOS may be
+updated often so it's better to have a separate image with the toolchains as
+building them can take hours.
+
+Of course, the Docker image produced here can be used for CI/CD pipelines!
+
+Don't hesitate to have multiple `config.mk` files; this may be useful for
+building customized toolchains (e.g. a `stable` Docker image with `gcc-9.3.0`
+and a `legacy` one with `gcc-4.7.4`...).

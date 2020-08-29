@@ -1,8 +1,13 @@
+#
+# Dockerfile for Sega Dreamcast Toolchains Maker (dc-chain)
+#
+
 # Stage 1
 FROM alpine:latest as build
-MAINTAINER KallistiOS <team@dreamsdk.org>
+MAINTAINER KallistiOS <cadcdev-kallistios@lists.sourceforge.net>
 
 # Installing prerequisites
+# Note: libelf-dev is not available in main repository, so we use the v3.9 package
 RUN apk --update add --no-cache \
 	build-base \
 	patch \
@@ -19,11 +24,13 @@ RUN apk --update add --no-cache \
 	&& rm -rf /var/cache/apk/*
 
 # Making Sega Dreamcast toolchains
+# You may adapt the KallistiOS repository URL if needed
 RUN mkdir -p /opt/toolchains/dc \
 	&& git clone https://git.code.sf.net/p/cadcdev/kallistios /opt/toolchains/dc/kos \
 	&& cd /opt/toolchains/dc/kos/utils/dc-chain && ./download.sh && ./unpack.sh && make && make gdb \
 	&& rm -rf /opt/toolchains/dc/kos
 
 # Stage 2
+# Optimize image size
 FROM scratch
 COPY --from=build / /
