@@ -91,7 +91,7 @@ versions without problems.
 Tested **GCC** / **Newlib** version combinaisons are:
 
 - GCC `9.3.0` with Newlib `3.3.0` for `sh-elf` and GCC `8.4.0` for `arm-eabi`
-  (edge; in testing stage; default values in `config.mk`);
+  (stable; default values in `config.mk`);
 - GCC `4.7.4` with Newlib `2.0.0` for `sh-elf` and `arm-eabi` (stable; the most
   well tested combination, [some issues may happen in C++](https://dcemulation.org/phpBB/viewtopic.php?f=29&t=104724));
 - GCC `4.7.3` with Newlib `2.0.0` for `sh-elf` and `arm-eabi` (previous stable
@@ -123,6 +123,9 @@ In clear, after building the toolchains, you'll have two additional directories:
 - `/opt/toolchains/dc/arm-eabi`;
 - `/opt/toolchains/dc/sh-elf`.
 
+Of course, you may adapt the path if needed; but it's better to use the standard
+path if possible.
+
 ### Erase
 
 Set the `erase` flag to `1` to remove build directories on the fly to save
@@ -142,7 +145,7 @@ feel the need to use on the command line, and it will do the right thing.
 
 In the old times, this option may breaks things, so, if you run into trouble,
 you should clear this variable and try again with just one job running (i.e.
-"makejobs=").
+`makejobs=`).
 
 On **MinGW/MSYS** environment, it has been confirmed that multiple jobs breaks
 the toolchain all the time, so please don't try to do that under this
@@ -205,7 +208,7 @@ completely raw.
 
 **Note:** If you disable this flag, the KallistiOS threading model (`kos`) will
 be unavailable. Also, this may be a problem if you still apply the KallistiOS
-patches. Use this flag with care.
+patches. **Use this flag with care**.
 
 ## Usage
 
@@ -264,12 +267,14 @@ of the bogus step only rather than running the whole process again.
 Interesting targets (you can `make` any of these):
 
 - `all`: `patch` `build`
-- `patch`: `patch-gcc` `patch-newlib` `patch-kos`
-- `build`: `build-sh4` `build-arm`
-- `build-sh4`: `build-sh4-binutils` `build-sh4-gcc`
-- `build-arm`: `build-arm-binutils` `build-arm-gcc`
-- `build-sh4-gcc`: `build-sh4-gcc-pass1` `build-sh4-newlib` `build-sh4-gcc-pass2`
-- `build-arm-gcc`: `build-arm-gcc-pass1`
-- `build-sh4-newlib`: `build-sh4-newlib-only` `fixup-sh4-newlib`
-- `gdb`
-- `insight`
+- `patch`: `patch-gcc` `patch-newlib` `patch-kos` (should be executed once)
+- `build`: `build-sh4` `build-arm` (build everything)
+- `build-sh4`: `build-sh4-binutils` `build-sh4-gcc` (build only `sh-elf` toolchain)
+- `build-arm`: `build-arm-binutils` `build-arm-gcc` (build only `arm-eabi` toolchain)
+- `build-sh4-binutils` (build only `binutils` for `sh-elf`)
+- `build-arm-binutils` (build only `binutils` for `arm-eabi`)
+- `build-sh4-gcc`: `build-sh4-gcc-pass1` `build-sh4-newlib` `build-sh4-gcc-pass2` (build only `sh-elf-gcc` and `sh-elf-g++`)
+- `build-arm-gcc`: `build-arm-gcc-pass1` (build only `arm-eabi-gcc`)
+- `build-sh4-newlib`: `build-sh4-newlib-only` `fixup-sh4-newlib` (build only `newlib` for `sh-elf`)
+- `gdb` (build only `sh-elf-gdb`; it's never built automatically)
+- `insight` (build only `insight`; it's never built automatically)
