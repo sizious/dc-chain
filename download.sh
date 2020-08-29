@@ -85,7 +85,7 @@ fi
 # Downloading config.guess.
 if [ ! -f ${CONFIG_GUESS} ]; then
   WEB_DOWNLOAD_OUTPUT_SWITCH="-O"
-  if [ ! -z "${IS_CURL}" ]; then
+  if [ ! -z "${IS_CURL}" ] && [ "${IS_CURL}" != "0" ]; then
     WEB_DOWNLOADER="$(echo ${WEB_DOWNLOADER} | cut -c-9)"
     WEB_DOWNLOAD_OUTPUT_SWITCH="-o"
   fi

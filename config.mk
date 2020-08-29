@@ -19,7 +19,7 @@
 
 # Toolchain versions for SH
 sh_binutils_ver=2.34
-sh_gcc_ver=10.1.0
+sh_gcc_ver=9.3.0
 newlib_ver=3.3.0
 gdb_ver=9.2
 insight_ver=6.8-1
@@ -49,7 +49,7 @@ arm_gcc_tarball_type=xz
 # recommended. The ISL dependency isn't mandatory; if you don't want it, you may 
 # just comment the version numbers (i.e. 'sh_isl_ver' and 'arm_isl_ver') to
 # disable the ISL library.
-use_custom_dependencies=1
+#use_custom_dependencies=1
 
 # Internal custom GCC libraries (i.e. GMP, MPFR, MPC and ISL) versions to use
 # only if the 'use_custom_dependencies' flag is set to '1'.
@@ -108,15 +108,15 @@ makejobs=-j2
 # hard drive space.
 pass2_languages=c,c++,objc,obj-c++
 
-# Download protocol (http|ftp)
+# Download protocol (http|https|ftp)
 # Specify here the protocol you want to use for downloading the packages.
-download_protocol=http
+download_protocol=https
 
 # Force downloader (curl|wget)
 # You may specify here 'wget' or 'curl'. If this variable is empty or commented,
 # web downloader tool will be auto-detected in the following order: cURL, Wget.
 # You must have either Wget or cURL installed to use dc-chain.
-force_downloader=wget
+#force_downloader=wget
 
 # GCC threading model (single|kos|posix*)
 # With GCC 4.x versions and up, the patches provide a 'kos' thread model, so you 
@@ -130,7 +130,7 @@ thread_model=kos
 # Use 'install-strip' mode for removing debugging symbols of the toolchains.
 # Use 'install' only if you want to enable debug symbols for the toolchains.
 # This may be useful only if you plan to debug the toolchain itself.
-install_mode=install
+install_mode=install-strip
 
 # MinGW/MSYS
 # Standalone binaries (1|0)
@@ -138,3 +138,10 @@ install_mode=install
 # When the binaries are standalone, it can be run outside MinGW/MSYS
 # environment. This is NOT recommended. Use it if you know what you are doing.
 #standalone_binary=1
+
+# Automatic fixup SH-4 Newlib (1|0)
+# Uncomment this if you want to disable the automatic fixup sh4 newlib needed by
+# KallistiOS. This will keep the generated toolchain completely raw. This will
+# also disable the 'kos' thread model. Don't mess with that flag unless you know
+# exactly what you are doing.
+#auto_fixup_sh4_newlib=0
