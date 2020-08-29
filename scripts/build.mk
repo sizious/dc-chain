@@ -43,7 +43,7 @@ $(build_sh4_targets): binutils_ver = $(sh_binutils_ver)
 ifdef MINGW
 # To compile dc-tool, we need to install libbfd for sh-elf.
 # This is done when making build-sh4-binutils.
-  $(build_sh4_targets): libbfd_install_flag = -enable-install-libbfd
+  $(build_sh4_targets): libbfd_install_flag = -enable-install-libbfd -enable-install-libiberty
   $(build_sh4_targets): libbfd_src_bin_dir = $(sh_prefix)/$(host_triplet)/$(sh_target)
 endif
 
