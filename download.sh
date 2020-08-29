@@ -44,41 +44,41 @@ function download_dependencies()
   local mpfr_ver=$SH_MPFR_VER
   local mpc_ver=$SH_MPC_VER
   local isl_ver=$SH_ISL_VER
-  local gmp_tarball_type=$SH_GMP_TARBALL_TYPE
-  local mpfr_tarball_type=$SH_MPFR_TARBALL_TYPE
-  local mpc_tarball_type=$SH_MPC_TARBALL_TYPE
-  local isl_tarball_type=$SH_ISL_TARBALL_TYPE
+  local gmp_url=$SH_GMP_URL
+  local mpfr_url=$SH_MPFR_URL
+  local mpc_url=$SH_MPC_URL
+  local isl_url=$SH_ISL_URL
 
   if [ "$arch" == "arm" ]; then
     gmp_ver=$ARM_GMP_VER
     mpfr_ver=$ARM_MPFR_VER
     mpc_ver=$ARM_MPC_VER
     isl_ver=$ARM_ISL_VER
-    gmp_tarball_type=$ARM_GMP_TARBALL_TYPE
-    mpfr_tarball_type=$ARM_MPFR_TARBALL_TYPE
-    mpc_tarball_type=$ARM_MPC_TARBALL_TYPE
-    isl_tarball_type=$ARM_ISL_TARBALL_TYPE
+    gmp_url=$ARM_GMP_URL
+    mpfr_url=$ARM_MPFR_URL
+    mpc_url=$ARM_MPC_URL
+    isl_url=$ARM_ISL_URL
   fi
 
   if [ "$USE_CUSTOM_DEPENDENCIES" == "1" ]; then
-    download "GMP"  "$gmp_ver"   "gcc.gnu.org/pub/gcc/infrastructure/gmp-$gmp_ver.tar.$gmp_tarball_type"
-    download "MPFR" "$mpfr_ver"  "gcc.gnu.org/pub/gcc/infrastructure/mpfr-$mpfr_ver.tar.$mpfr_tarball_type"
-    download "MPC"  "$mpc_ver"   "gcc.gnu.org/pub/gcc/infrastructure/mpc-$mpc_ver.tar.$mpc_tarball_type"
-    download "ISL"  "$isl_ver"   "gcc.gnu.org/pub/gcc/infrastructure/isl-$isl_ver.tar.$isl_tarball_type"
+    download "GMP"  "$gmp_ver"   "$gmp_url"
+    download "MPFR" "$mpfr_ver"  "$mpfr_url"
+    download "MPC"  "$mpc_ver"   "$mpc_url"
+    download "ISL"  "$isl_ver"   "$isl_url"
   fi
 }
 
 # Download everything.
 if [ -z "${CONFIG_GUESS_ONLY}" ]; then
   # Downloading SH components
-  download "Binutils" "$SH_BINUTILS_VER" "ftp.gnu.org/gnu/binutils/binutils-$SH_BINUTILS_VER.tar.$SH_BINUTILS_TARBALL_TYPE"
-  download "GCC" "$SH_GCC_VER" "ftp.gnu.org/gnu/gcc/gcc-$SH_GCC_VER/gcc-$SH_GCC_VER.tar.$SH_GCC_TARBALL_TYPE"
+  download "Binutils" "$SH_BINUTILS_VER" "$SH_BINUTILS_URL"
+  download "GCC" "$SH_GCC_VER" "$SH_GCC_URL"
   download_dependencies "sh"
-  download "Newlib" "$NEWLIB_VER" "sourceware.org/pub/newlib/newlib-$NEWLIB_VER.tar.$NEWLIB_TARBALL_TYPE"
+  download "Newlib" "$NEWLIB_VER" "$NEWLIB_URL"
 
   # Downloading ARM components
-  download "Binutils" $ARM_BINUTILS_VER"" "ftp.gnu.org/gnu/binutils/binutils-$ARM_BINUTILS_VER.tar.$ARM_BINUTILS_TARBALL_TYPE"
-  download "GCC" "$ARM_GCC_VER" "ftp.gnu.org/gnu/gcc/gcc-$ARM_GCC_VER/gcc-$ARM_GCC_VER.tar.$ARM_GCC_TARBALL_TYPE"
+  download "Binutils" $ARM_BINUTILS_VER"" "$ARM_BINUTILS_URL"
+  download "GCC" "$ARM_GCC_VER" "$ARM_GCC_URL"
   download_dependencies "arm"
 fi
 

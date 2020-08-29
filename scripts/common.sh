@@ -52,6 +52,14 @@ export INSIGHT_TARBALL_TYPE=`get_make_var insight_tarball_type`
 export ARM_BINUTILS_TARBALL_TYPE=`get_make_var arm_binutils_tarball_type`
 export ARM_GCC_TARBALL_TYPE=`get_make_var arm_gcc_tarball_type`
 
+export SH_BINUTILS_URL=ftp.gnu.org/gnu/binutils/binutils-${SH_BINUTILS_VER}.tar.${SH_BINUTILS_TARBALL_TYPE}
+export SH_GCC_URL=ftp.gnu.org/gnu/gcc/gcc-${SH_GCC_VER}/gcc-${SH_GCC_VER}.tar.${SH_GCC_TARBALL_TYPE}
+export NEWLIB_URL=sourceware.org/pub/newlib/newlib-${NEWLIB_VER}.tar.${NEWLIB_TARBALL_TYPE}
+export GDB_URL=ftp.gnu.org/gnu/gdb/gdb-${GDB_VER}.tar.${GDB_TARBALL_TYPE}
+export INSIGHT_URL=mirrors.kernel.org/sourceware/insight/releases/insight-${INSIGHT_VER}a.tar.${INSIGHT_TARBALL_TYPE}
+export ARM_BINUTILS_URL=ftp.gnu.org/gnu/binutils/binutils-${SH_BINUTILS_VER}.tar.${SH_BINUTILS_TARBALL_TYPE}
+export ARM_GCC_URL=ftp.gnu.org/gnu/gcc/gcc-${ARM_GCC_VER}/gcc-${ARM_GCC_VER}.tar.${ARM_GCC_TARBALL_TYPE}
+
 export DOWNLOAD_PROTOCOL="`get_make_var download_protocol`://"
 
 export USE_CUSTOM_DEPENDENCIES=`get_make_var use_custom_dependencies`
@@ -73,6 +81,15 @@ export ARM_GMP_TARBALL_TYPE=`get_make_var arm_gmp_tarball_type`
 export ARM_MPFR_TARBALL_TYPE=`get_make_var arm_mpfr_tarball_type`
 export ARM_MPC_TARBALL_TYPE=`get_make_var arm_mpc_tarball_type`
 export ARM_ISL_TARBALL_TYPE=`get_make_var arm_isl_tarball_type`
+
+export SH_GMP_URL=gmplib.org/download/gmp/gmp-${SH_GMP_VER}.tar.${SH_GMP_TARBALL_TYPE}
+export SH_MPFR_URL=www.mpfr.org/mpfr-current/mpfr-${SH_MPFR_VER}.tar.${SH_MPFR_TARBALL_TYPE}
+export SH_MPC_URL=ftp.gnu.org/gnu/mpc/mpc-${SH_MPC_VER}.tar.${SH_MPC_TARBALL_TYPE}
+export SH_ISL_URL=isl.gforge.inria.fr/isl-${SH_ISL_VER}.tar.${SH_ISL_TARBALL_TYPE}
+export ARM_GMP_URL=gmplib.org/download/gmp/gmp-${ARM_GMP_VER}.tar.${ARM_GMP_TARBALL_TYPE}
+export ARM_MPFR_URL=www.mpfr.org/mpfr-current/mpfr-${ARM_MPFR_VER}.tar.${ARM_MPFR_TARBALL_TYPE}
+export ARM_MPC_URL=ftp.gnu.org/gnu/mpc/mpc-${ARM_MPC_VER}.tar.${ARM_MPC_TARBALL_TYPE}
+export ARM_ISL_URL=isl.gforge.inria.fr/isl-${ARM_ISL_VER}.tar.${ARM_ISL_TARBALL_TYPE}
 
 # Retrieve the web downloader program available in this system.
 export IS_CURL=0
