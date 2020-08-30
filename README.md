@@ -164,7 +164,7 @@ You may have the possibility to change the download protocol used when
 downloading the packages.
 
 Set the `download_protocol` variable to `http`, `https` or `ftp` as you want.
-Default is `https`.
+Default is `http`.
 
 ### Force downloader
 
