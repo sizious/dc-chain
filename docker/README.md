@@ -19,7 +19,7 @@ the open source **Sega Dreamcast** development library.
 In clear, this `Dockerfile` doesn't build KallistiOS itself, only the required
 toolchains. KallistiOS is not part of the toolchains. Plus, KallistiOS may be
 updated often so it's better to have a separate image with the toolchains as
-building them can take hours.
+building them can take hours and don't change often.
 
 Of course, the Docker image produced here can be used for CI/CD pipelines!
 

@@ -4,7 +4,7 @@ This document contains all the instructions to create a fully working
 toolchains targeting the **Sega Dreamcast** system under **MinGW-w64/MSYS2**.
 
 This document applies only on the newer **MinGW-w64/MSYS2** environment provided
-by [MinGW-w64.org](https://mingw-w64.org/). For the original **MinGW/MSYS**
+by [MinGW-w64.org](https://mingw-w64.org/). For the legacy **MinGW/MSYS**
 environment, check the `mingw.md` file.
 
 ## Introduction ##
@@ -26,7 +26,7 @@ information, in the past some problems happened with the `x86_64` **Cygwin**
 version. Feel free to try it out if you want.
 
 Please note also, the **Microsoft Windows XP** support was dropped on this
-environment. If you need support for this old platform, you need to use the 
+environment. If you need support for this old OS, you need to use the 
 **MinGW/MSYS** environment instead.
 
 ## Installation of MinGW-w64/MSYS2 ##
@@ -103,10 +103,10 @@ By the way you can check the installation success by entering something like
  
 		mkdir -p /opt/toolchains/dc/dcload/
 		cd /opt/toolchains/dc/dcload/
-		git clone https://github.com/KallistiOS/dcload-serial.git
-		git clone https://github.com/KallistiOS/dcload-ip.git
+		git clone https://gitlab.com/kallistios/dcload-serial.git
+		git clone https://gitlab.com/kallistios/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchains.
+Everything is ready, now it's time to make the toolchains.
 
 ## Compilation ##
 
@@ -166,7 +166,7 @@ symbolic links are not well managed under this environment.
 That's why you need to manually fix up **SH-4** `newlib` when updating your
 toolchains (i.e. rebuilding it) and/or updating **KallistiOS**.
 
-This is the purpose of the provided `./packages/fixup-sh4-newlib.sh` script.
+This is the purpose of the provided `fixup-sh4-newlib.sh` script.
 
 Before executing it, just edit it to be sure if the `$toolchains_base` variable
 is correctly set. Then execute it by just entering:
@@ -179,5 +179,4 @@ After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 
-Please read the `/opt/toolchains/dc/kos/doc/README` file to learn the next
-steps.
+You may consult the `README` file from KallistiOS now.

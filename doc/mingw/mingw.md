@@ -3,8 +3,8 @@
 This document contains all the instructions to create a fully working
 toolchains targeting the **Sega Dreamcast** system under **MinGW/MSYS**.
 
-This document applies only on the original **MinGW/MSYS** environment provided
-by [MinGW.org](http://www.mingw.org). For **MinGW-w64/MSYS2** environment, check
+This document applies only on the legacy **MinGW/MSYS** environment provided
+by [MinGW.org](http://www.mingw.org). For **MinGW-w64/MSYS2** environment, read
 the `mingw-w64.md` file.
 
 ## Introduction ##
@@ -71,8 +71,8 @@ before doing anything. It's the purpose of the section located below.
 
 The latest provided **MSYS** package, which is the `1.0.19` in date, contains
 **a severe bug in the heap memory management system**. This can stop the `gcc`
-compilation in progress with the following unresolvable error: `Couldn't commit
-memory for cygwin heap, Win32 error`. 
+compilation in progress with the following unresolvable error:
+`Couldn't commit memory for cygwin heap, Win32 error`.
 
 In order to resolve this bug, you must install the `msys-1.0.dll` from the
 [C::B Advanced package](https://sourceforge.net/projects/cbadvanced/files/)
@@ -84,7 +84,7 @@ as they are now using the modern **MinGW-w64/MSYS2** environment.
 Fortunately, the required package was cached in this directory, under the
 following name: `msysCORE-1.0.18-1-heap-patch-20140117.7z`.
 
-This patch is just necessary to build the `gcc` cross-compiler. After installing
+This patch is just necessary to build the `gcc` cross-compiler. After building
 all the toolchains, you can revert back the replaced `msys-1.0.dll` with its
 original version.
 
@@ -94,10 +94,13 @@ To install the **MSYS** heap patch:
    necessary file, e.g. the `/etc/fstab` file). You can do that by
    double-clicking the shortcut on your desktop (or alternatively,
    double-clicking on the `${MINGW_ROOT}\msys\1.0\msys.bat` batch file).
-2. Close the bash by entering the `exit` command.
+   
+2. Close `bash` by entering the `exit` command.
+
 3. Move the original `/bin/msys-1.0.dll`
   (i.e. `${MINGW_ROOT}\msys\1.0\bin\msys-1.0.dll`) outside its folder (please 
   don't just rename the file in the `/bin` folder!).
+ 
 4. Extract the patched `msys-1.0.dll` from 
    `msysCORE-1.0.18-1-heap-patch-20140117.7z` and place it in the `/bin`
    directory (i.e. `${MINGW_ROOT}\msys\1.0\bin\`).
@@ -129,10 +132,10 @@ of the `/etc/fstab` file (i.e. `${MINGW_ROOT}\msys\1.0\etc\fstab`).
  
 		mkdir -p /opt/toolchains/dc/dcload/
 		cd /opt/toolchains/dc/dcload/
-		git clone https://github.com/KallistiOS/dcload-serial.git
-		git clone https://github.com/KallistiOS/dcload-ip.git
+		git clone https://gitlab.com/kallistios/dcload-serial.git
+		git clone https://gitlab.com/kallistios/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchains.
+Everything is ready, now it's time to make the toolchains.
 
 ## About making toolchains static binaries ##
 
@@ -167,6 +170,8 @@ environment.
 
 Basically, if you just plan to use the **MinGW/MSYS** environment through the
 **MSYS Shell**, just let the `STANDALONE_BINARY` flag undefined.
+
+**Note:** This flag is here to build [DreamSDK](https://dreamsdk.org) as well.
 
 ## Compilation ##
 
@@ -235,7 +240,7 @@ symbolic links are not well managed under this environment.
 That's why you need to manually fix up **SH-4** `newlib` when updating your
 toolchains (i.e. rebuilding it) and/or updating **KallistiOS**.
 
-This is the purpose of the provided `./packages/fixup-sh4-newlib.sh` script.
+This is the purpose of the provided `fixup-sh4-newlib.sh` script.
 
 Before executing it, just edit it to be sure if the `$toolchains_base` variable
 is correctly set. Then execute it by just entering:
@@ -248,5 +253,4 @@ After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 
-Please read the `/opt/toolchains/dc/kos/doc/README` file to learn the next
-steps.
+You may consult the `README` file from KallistiOS now.

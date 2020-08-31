@@ -5,8 +5,9 @@ toolchains targeting the **Sega Dreamcast** system under **Cygwin**.
 
 ## Introduction ##
 
-On the **Cygwin** system, the package manager is the `setup-${arch}.exe`
-file. It's designed to be run on graphical user-interface (GUI) mode.
+On the **Cygwin** system, the package manager is directly the
+`setup-${arch}.exe` file. It's designed to be run on graphical user-interface
+(GUI) mode.
 
 The **Cygwin** environment exists in two flavors:
 
@@ -18,7 +19,7 @@ the `x86_64` version, you should replace all `i686` keywords in the packages
 name with `x86_64`.
 
 Please note that in the past, the **Cygwin** `x86_64` had problems with the
-toolchains, so its usage is not recommended.
+toolchains, so its usage is not recommended; but feel free to test it out.
 
 ## Installation of Cygwin ##
 
@@ -32,16 +33,20 @@ toolchains, so its usage is not recommended.
 3. Choose `Install from Internet` then click on the `Next` button.
 
 4. In the `Root Directory` text box, input `C:\dcsdk\` or something else. The
-`Root Directory` will be called `${CYGWIN_ROOT}` later in the document. Click on the `Next` button.
+   `Root Directory` will be called `${CYGWIN_ROOT}` later in the document. Click
+   on the `Next` button.
 
-5. In the `Local Package Directory`, input what you want. It should be a good idea to put the packages in the **Cygwin** directory, e.g. in `${CYGWIN_ROOT}\var\cache\packages\`. Click on the `Next` button.
+5. In the `Local Package Directory`, input what you want. It should be a good
+   idea to put the packages in the **Cygwin** directory, e.g. in
+   `${CYGWIN_ROOT}\var\cache\packages\`. Click on the `Next` button.
 
 6. Adjust proxy settings as needed, then click on the `Next` button.
 
 7. Choose a FTP location near you and click the `Next` button.
 
-8. When the **Select Packages** window shows up, select the following
-packages, by using the `Search` text box (it should be more efficient to choose the `Category` view):
+8. When the **Select Packages** window shows up, select the following packages,
+   by using the `Search` text box (it should be more efficient to choose the
+   `Category` view):
 
 	- `autoconf`
 	- `automake`
@@ -59,9 +64,12 @@ packages, by using the `Search` text box (it should be more efficient to choose 
 	- `subversion`
 	- `texinfo`
 
-9. Validate the installation by clicking the `Next` button, the click on the `Terminate` button to exit the installer. It should be a good idea to create the shortcuts on the Desktop and/or in the Start Menu.
+9. Validate the installation by clicking the `Next` button, the click on the
+   `Terminate` button to exit the installer. It should be a good idea to create
+   the shortcuts on the Desktop and/or in the Start Menu.
 
-10. Move the `setup-${arch}.exe` file in the `${CYGWIN_ROOT}` directory. This is important if you want to update your **Cygwin** installation.
+10. Move the `setup-${arch}.exe` file in the `${CYGWIN_ROOT}` directory. This is
+    important if you want to update your **Cygwin** installation.
 
 The **Cygwin** base environment is ready. It's time to setup the 
 whole environment to build the toolchains.
@@ -84,10 +92,10 @@ whole environment to build the toolchains.
  
 		mkdir -p /opt/toolchains/dc/dcload/
 		cd /opt/toolchains/dc/dcload/
-		git clone https://github.com/KallistiOS/dcload-serial.git
-		git clone https://github.com/KallistiOS/dcload-ip.git
+		git clone https://gitlab.com/kallistios/dcload-serial.git
+		git clone https://gitlab.com/kallistios/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchains.
+Everything is ready, now it's time to make the toolchains.
 
 ## Compilation ##
 
@@ -147,5 +155,4 @@ After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 
-Please read the `/opt/toolchains/dc/kos/doc/README` file to learn the next
-steps.
+You may consult the `README` file from KallistiOS now.

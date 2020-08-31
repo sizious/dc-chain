@@ -5,4 +5,3 @@ purposes, we have written two guides for **Debian** and **Alpine Linux**.
 
 Additional guides may be written for other **GNU/Linux** distributions in the
 future.
-

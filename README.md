@@ -17,7 +17,7 @@ By using this utility, 2 toolchains will be built for **Dreamcast** development:
 
 The `dc-chain` package will build everything you need to compile **KallistiOS**
 and then finally develop for the **Sega Dreamcast** system. Please note that
-`dc-chain` optimize the both toolchains for use with **KallistiOS** so if you
+`dc-chain` optimize the both toolchains for the use of **KallistiOS** so if you
 plan to use another **Dreamcast** library (e.g. `libronin`), `dc-chain` may 
 not be so useful for you, at least *out-of-the-box*.
 
@@ -38,14 +38,17 @@ for the main toolchain (`sh-elf`).
 ## Getting started
 
 Before you start, please browse the `./doc` directory and check if they are
-full instructions for building the whole toolchains for your environment. A big
-effort was put to simplify the building process as much as possible, for all
-modern environments, mainly **Linux** (including **BSD**), **macOS** and
+full instructions for building the whole toolchains for your environment.
+
+A big effort was put to simplify the building process as much as possible, for
+all modern environments, mainly **Linux** (including **BSD**), **macOS** and
 **Windows** (including **Cygwin**, **MinGW-w64/MSYS2** and **MinGW/MSYS**).
+Indeed, a lot of conditional instructions have been added, so it should work
+most of the time just out-of-the-box for your environment.
 
 ### `dc-chain` utility installation
 
-`dc-chain` is part of **KallistiOS** so you should have it in the 
+`dc-chain` is part of **KallistiOS** so you should have it installed in the 
 `$KOS_BASE/utils/dc-chain` directory. You don't need to have **KallistiOS** 
 configured (i.e. have the `$KOS_BASE/environ.sh` file created) as building 
 toolchains is a prerequisite in order to build **KallistiOS** itself.
@@ -54,9 +57,9 @@ toolchains is a prerequisite in order to build **KallistiOS** itself.
 
 You'll need your host toolchain (i.e. the regular `gcc` plus additional tools)
 for your computer installed. Indeed, to build the cross-compilers you'll need a
-working compilation environment. 
+working compilation environment on your computer.
 
-Everything is described in the `./doc` directory.
+If you need help on this step, everything is described in the `./doc` directory.
 
 ## Configuration
 
@@ -83,22 +86,23 @@ For the `arm-eabi` toolchain, they are:
 - `arm_gcc_ver`
 
 Speaking about the best versions of the components to use for the Dreamcast
-development, they are already set in the `config.mk` file. This is particulary
+development, they are already set in the `config.mk` file. This is particularly
 true for **GCC** and **Newlib** as these components are patched to compile with
-**KallistiOS**. For **Binutils** or **GDB**, you may use the latest available
-versions without problems.
+**KallistiOS**. For **Binutils** or **GDB**, you may in theory use the latest
+available versions without problems.
 
-Tested **GCC** / **Newlib** version combinaisons are:
+Well tested **GCC** and **Newlib** version combinations are:
 
 - GCC `9.3.0` with Newlib `3.3.0` for `sh-elf` and GCC `8.4.0` for `arm-eabi`
-  (stable; default values in `config.mk`);
+  (edge; default values in `config.mk`);
 - GCC `4.7.4` with Newlib `2.0.0` for `sh-elf` and `arm-eabi` (stable; the most
   well tested combination, [some issues may happen in C++](https://dcemulation.org/phpBB/viewtopic.php?f=29&t=104724));
-- GCC `4.7.3` with Newlib `2.0.0` for `sh-elf` and `arm-eabi` (previous stable
-  version).
+- GCC `4.7.3` with Newlib `2.0.0` for `sh-elf` and `arm-eabi` (stable; previous
+  version, [some issues may happen in C++](https://dcemulation.org/phpBB/viewtopic.php?f=29&t=104724)).
 
 **Note:** The GCC's maximum version number possible for the `arm-eabi` toolchain
-is `8.4.0`. Support of the **ARM7** chip is dropped after that GCC version.
+is `8.4.0`. Support of the **ARM7** chip is dropped after that GCC version. So
+don't try to update the version of the `arm-eabi-gcc` component.
 
 You have the possibility to **use custom dependencies for GCC** directly in the
 `config.mk` file. In that case, you have to define `use_custom_dependencies=1`.
@@ -112,13 +116,17 @@ extensions you want to download too; this may be useful if a package
 changes its extension on the servers. For example, for GCC `4.7.4`, there is no
 `xz` tarball file, so you may change this to `gz`.
 
+**Note:** All download url are computed in the `scripts/common.sh` file, but
+you shouldn't update/change this.
+
 ### Toolchains base
 
 `toolchains_base` indicates the root directory where toolchains will be
 installed. This should match your `environ.sh` configuration. Default is 
 `/opt/toolchains/dc`.
 
-In clear, after building the toolchains, you'll have two additional directories:
+In clear, after building the toolchains, by using the default `toolchains_base`, 
+you'll have two additional directories:
 
 - `/opt/toolchains/dc/arm-eabi`;
 - `/opt/toolchains/dc/sh-elf`.
@@ -133,7 +141,9 @@ space.
 
 ### Verbose
 
-Set `verbose` to `1` to display output to screen as well as log files.
+Set `verbose` to `1` to display output to screen as well as `log` files. In clear
+if `verbose` is set to `0`, all the output will be stored directly in the `log`
+files.
 
 ### Make jobs
 
@@ -161,7 +171,7 @@ You may remove the latter two if you don't want them.
 ### Download protocol
 
 You may have the possibility to change the download protocol used when
-downloading the packages.
+downloading the packages (i.e. from `download.sh` script file).
 
 Set the `download_protocol` variable to `http`, `https` or `ftp` as you want.
 Default is `https`.
@@ -188,19 +198,19 @@ supported anymore.
 ### Install mode
 
 Set this to `install` if you want to debug the toolchains themselves or keep
-this to `install_mode` if you just want to use the produced toolchains in
+this to `install-strip` if you just want to use the produced toolchains in
 **release** mode. This reduces the size of the toolchains drastically.
 
 ### Standalone binaries (MinGW/MSYS only)
 
 Set `standalone_binary` to `1` if you want to build static binaries, which may
-be run outside the MinGW/MSYS environment. This flag has no effect on the others
-OS.
+be run outside the MinGW/MSYS environment. This flag has no effect on other
+environments.
 
 Building static binaries are useful only if you plan to use an IDE on Windows.
-This flag is also here mainly for producing [DreamSDK](https://dreamsdk.org).
+This flag is here mainly for producing [DreamSDK](https://dreamsdk.org).
 
-### Automatic fixup SH-4 Newlib (experimental)
+### Automatic fixup SH-4 Newlib (use with care)
 
 Set `auto_fixup_sh4_newlib` to `0` if you want to disable the automatic fixup
 SH-4 Newlib needed by KallistiOS. This will keep the generated toolchain
@@ -212,25 +222,20 @@ patches. **Use this flag with care**.
 
 ## Usage
 
-After installing all the prerequisites and tweaking the configuration, it's time
-to build the toolchains.
+After installing all the prerequisites and tweaking the configuration with the
+`config.mk` file, it's time to build the toolchains.
 
 ### Making the toolchain
 
 Below you will find some generic instructions; you may find some specific
-instructions in the `./doc` directory for your OS.
+instructions in the `./doc` directory for your environment.
 
-1. Change the variables in the `config.mk` file to match your environment. 
-   They can be overridden at the command line as well, **except version numbers**.
-   Please note, a lot of conditional instructions have been added, so it should
-   work most of the time just out-of-the-box for your environment.
-
-2. Then execute the following for preparing the sources:
+1. Execute the following for preparing the sources:
 
 		./download.sh
 		./unpack.sh
 
-3. Finally, input (for **BSD**, please use `gmake` instead):
+2. Finally, input (for **BSD**, please use `gmake` instead):
 
 		make
 	
@@ -248,7 +253,8 @@ you can make it by entering:
 
 This will install `gdb` in the `sh-elf` toolchain. `gdb` is used with
 `dcload/dc-tool` programs, which are part of **KallistiOS** too, in order to do
-remote debugging of your **Dreamcast** programs.
+remote debugging of your **Dreamcast** programs. Please read the `dcload`
+documentation to learn more on this point.
 
 ### Removing all useless files
 
@@ -266,10 +272,10 @@ of the bogus step only rather than running the whole process again.
 
 Interesting targets (you can `make` any of these):
 
-- `all`: `patch` `build`
+- `all`: `patch` `build` (patch and build everything, excluding `gdb` and `insight`)
 - `patch`: `patch-gcc` `patch-newlib` `patch-kos` (should be executed once)
-- `build`: `build-sh4` `build-arm` (build everything)
-- `build-sh4`: `build-sh4-binutils` `build-sh4-gcc` (build only `sh-elf` toolchain)
+- `build`: `build-sh4` `build-arm` (build everything, excluding `gdb` and `insight`)
+- `build-sh4`: `build-sh4-binutils` `build-sh4-gcc` (build only `sh-elf` toolchain, excluding `gdb`)
 - `build-arm`: `build-arm-binutils` `build-arm-gcc` (build only `arm-eabi` toolchain)
 - `build-sh4-binutils` (build only `binutils` for `sh-elf`)
 - `build-arm-binutils` (build only `binutils` for `arm-eabi`)

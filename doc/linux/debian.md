@@ -65,10 +65,10 @@ By the way you can check the installation success by entering something like
  
 		mkdir -p /opt/toolchains/dc/dcload/
 		cd /opt/toolchains/dc/dcload/
-		git clone https://github.com/KallistiOS/dcload-serial.git
-		git clone https://github.com/KallistiOS/dcload-ip.git
+		git clone https://gitlab.com/kallistios/dcload-serial.git
+		git clone https://gitlab.com/kallistios/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchains.
+Everything is ready, now it's time to make the toolchains.
 
 ## Compilation ##
 
@@ -126,5 +126,4 @@ After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 
-Please read the `/opt/toolchains/dc/kos/doc/README` file to learn the next
-steps.
+You may consult the `README` file from KallistiOS now.

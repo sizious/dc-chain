@@ -5,16 +5,16 @@ your environment:
 
 * If you are using the newer **MinGW-w64/MSYS2** environment provided by
   [MinGW-w64.org](https://mingw-w64.org/), please open `mingw-w64.md`.
-* If you are using the original **MinGW/MSYS** environment provided by
+* If you are using the legacy **MinGW/MSYS** environment provided by
   [MinGW.org](http://www.mingw.org), please open `mingw.md`.
 
 Even if the name of the environment sounds identical, they are very different. 
 So please be sure to use the correct documentation!
 
-## How to determinate the MinGW environment
+## How to determine the MinGW environment flavour
 
-A quick way to determinate if you are using **MinGW-w64/MSYS2** or 
-**MinGW/MSYS** can be:
+A quick way to determine if you are using **MinGW-w64/MSYS2** or **MinGW/MSYS**
+can be:
 
 1. Open the **MSYS Shell**.
 

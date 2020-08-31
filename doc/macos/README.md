@@ -52,6 +52,9 @@ Please note, you can ignore these instructions below if you already have
 All the developer tools should be now installed, like `gcc` or `make`. You can
 try this by entering `gcc --version` in the **Terminal**.
 
+**Note:** On **macOS**, `gcc` redirects to `clang` from the [LLVM](https://llvm.org/)
+project. This is normal and doesn't affect the **dc-chain** process.
+
 ### Installation of Homebrew ###
 
 As already said in the introduction, the **macOS** system doesn't come with a
@@ -90,10 +93,10 @@ or `python`.
  
 		mkdir -p /opt/toolchains/dc/dcload/
 		cd /opt/toolchains/dc/dcload/
-		git clone https://github.com/KallistiOS/dcload-serial.git
-		git clone https://github.com/KallistiOS/dcload-ip.git
+		git clone https://gitlab.com/kallistios/dcload-serial.git
+		git clone https://gitlab.com/kallistios/dcload-ip.git
 
-Everything is ready, now it's time to use the make the toolchains.
+Everything is ready, now it's time to make the toolchains.
 
 ## Compilation ##
 
@@ -151,5 +154,4 @@ After following this guide, the toolchains should be ready.
 
 Now it's time to compile **KallistiOS**.
 
-Please read the `/opt/toolchains/dc/kos/doc/README` file to learn the next
-steps.
+You may consult the `README` file from KallistiOS now.
